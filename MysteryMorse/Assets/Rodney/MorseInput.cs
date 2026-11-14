@@ -16,6 +16,11 @@ public class MorseInput : MonoBehaviour, IScrollable
     private ScrollDirection previousScrollDirection = ScrollDirection.None;
     private ScrollDirection currentScrollDirection = ScrollDirection.None;
 
+    [Header("Current Morse Input")]
+
+    [SerializeField]
+    public string currentMorseInput = "";
+
     
 
     //switch bone rotation constraints
@@ -61,16 +66,19 @@ public class MorseInput : MonoBehaviour, IScrollable
     
     public char ReturnDotOrDash(float frameScrollValue)
     {
+    /*
         if (frameScrollValue > 0)
         {
             previousScrollDirection = currentScrollDirection;
             currentScrollDirection = ScrollDirection.Up;
+            Debug.Log("<color=green>Positive Scroll Value Recieved: " + frameScrollValue + " Dot</color>");
             return '.';
         }
         else if (frameScrollValue < 0)
         {
             previousScrollDirection = currentScrollDirection;
             currentScrollDirection = ScrollDirection.Down;
+            Debug.Log("<color=red>Negative Scroll Value Recieved: " + frameScrollValue + " Dash</color>");
             return '-';
         }
         // Return a space if no scroll for x amount of time. 
@@ -83,6 +91,7 @@ public class MorseInput : MonoBehaviour, IScrollable
                         
                if (previousScrollDirection != ScrollDirection.None)
             {
+                Debug.Log("<color=blue>Zero Scroll Value Recieved: " + frameScrollValue + " Space</color>");
                 return ' ';
             } 
             
@@ -97,12 +106,85 @@ public class MorseInput : MonoBehaviour, IScrollable
             // Return a space if no scroll for x amount of time.
             return '\0'; // Return null character if no scroll and no change in direction
         }
-
-
-
+    */
+        
+        switch (currentScrollDirection)
+        {
+            case ScrollDirection.Up:
+                currentMorseInput += ".";
+                return '.';
+            case ScrollDirection.Down:
+                currentMorseInput += "-";
+                return '-';
+            case ScrollDirection.None:
+                if (timer >= zeroInputTimer && previousScrollDirection != ScrollDirection.None)
+                {
+                    return ' ';
+                }
+                else
+                {
+                    return '\0'; // Return null character if no scroll and no change in direction
+                }
+            default:
+                return '\0'; // Return null character if no scroll and no change in direction
+        }
 
     }
 
+    public void ResetScrollDirection()
+    {
+        previousScrollDirection = ScrollDirection.None;
+        currentScrollDirection = ScrollDirection.None;
+    }
+
+    public void ResetTimer()
+    {
+        timer = 0f;
+    }
+
+    public void ResetBoneRotation()
+    {
+        currentZRotation = 90f;
+        SwitchBone.transform.localEulerAngles = new Vector3(SwitchBone.transform.localEulerAngles.x, SwitchBone.transform.localEulerAngles.y, currentZRotation);
+    }
+    
+    public void ResetAll()
+    {
+        ResetScrollDirection();
+        ResetTimer();
+        ResetBoneRotation();
+    }
+
+
+    public void CheckForSpace(float frameScrollValue)
+    {
+        if (frameScrollValue == 0 && timer >= zeroInputTimer)
+        {
+            previousScrollDirection = currentScrollDirection;
+            currentScrollDirection = ScrollDirection.None;
+
+            if (previousScrollDirection != ScrollDirection.None)
+            {
+                Debug.Log("<color=blue>Zero Scroll Value Recieved: " + frameScrollValue + " Space</color>");
+            }
+        }
+    }
+
+    public void CheckForDotOrDash(float frameScrollValue)
+    {
+        if (frameScrollValue > 0)
+        {
+            previousScrollDirection = currentScrollDirection;
+            currentScrollDirection = ScrollDirection.Up;
+            Debug.Log("<color=green>Positive Scroll Value Recieved: " + frameScrollValue + " Dot</color>");
+        }
+        else if (frameScrollValue < 0)
+        {
+            previousScrollDirection = currentScrollDirection;
+            currentScrollDirection = ScrollDirection.Down;
+            Debug.Log("<color=red>Negative Scroll Value Recieved: " + frameScrollValue + " Dash</color>");
+        }
+    }
 
     void Update()
     {
@@ -127,20 +209,8 @@ public class MorseInput : MonoBehaviour, IScrollable
     {
         //if you want to double chekc nly output when not 0
         
-        if (frameScrollValue > 0)
-        {
-            Debug.Log("<color=green>Positive Scroll Value Recieved: " + frameScrollValue + " Dot</color>");
-        }
-        else if (frameScrollValue < 0)
-        {
-            Debug.Log("<color=red>Negative Scroll Value Recieved: " + frameScrollValue + " Dash</color>");
-        }
-        else
-        {
-            Debug.Log("<color=blue>Zero Scroll Value Recieved: " + frameScrollValue + " Space</color>");
-           
-        }
-
+        CheckForDotOrDash(frameScrollValue);
+        CheckForSpace(frameScrollValue);
 
 
     }
