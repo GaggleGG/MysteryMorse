@@ -15,42 +15,18 @@ public class Terminal : MonoBehaviour
     private Morse morseRef;
 
     private string currentInput = "";
+    
 
 
 
-/*
+
+
     [ContextMenu("Update Input")]
     public void UpdateInput()
     {
-        if (morseInput.ReturnDotorDash() == ".")
-        {
-            currentInput += ".";
-            LiveTranslate(currentInput);
-        }
-        else if (morseInput.ReturnDotOrDash() == "-")
-        {
-            currentInput += "-";
-            LiveTranslate(currentInput);
-        }
-        else if (morseInput.ReturnDotOrDash() == " ")
-        {
-
-            //Ignore the space input if the current input is empty
-            if (currentInput.Length == 0)
-            {
-                return;
-            }
-            //ignore the space input if the current input is already a space
-            if (currentInput[currentInput.Length - 1] == ' ')
-            {
-                return;
-            }
-
-            currentInput += " ";
-            LiveTranslate(currentInput);
-        }
+        currentInput = morseInput.GetComponent<MorseInput>().currentMorseInput;
     }
-*/
+
 
     [ContextMenu("Clear Input")]
     public void ClearInput()
