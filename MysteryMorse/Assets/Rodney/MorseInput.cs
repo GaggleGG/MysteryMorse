@@ -5,6 +5,16 @@ public class MorseInput : MonoBehaviour, IScrollable
     [Header("Input Switch Bone")]
     [SerializeField]
     private GameObject SwitchBone;
+    
+    [Header("Sound Effects")]
+    [SerializeField]
+    public AudioClip dotSound;
+    [SerializeField]
+    public AudioClip dashSound;
+    [SerializeField]
+    public AudioClip ClickSound;
+    [SerializeField]
+    public AudioSource audioSource;
 
     public enum ScrollDirection
     {
@@ -33,6 +43,11 @@ public class MorseInput : MonoBehaviour, IScrollable
     private float currentZRotation = 90f;
     [SerializeField]
     private float rotationSpeed = 100f;
+
+     // Store starting local rotation angles
+    private float initialYAngle;
+    private float initialZAngle;
+    private float currentXAngle = 0f;
 
     [Header("No Scroll Input Timer")]
     [SerializeField]
