@@ -36,9 +36,17 @@ public class MorseInput : MonoBehaviour, IScrollable
 
     [Header("No Scroll Input Timer")]
     [SerializeField]
-    public float zeroInputTimer = 3f;
+    public float delayForSpace = 3f;
 
+    [Header("Scroll Delay Timer")]
+    [SerializeField]
+    public float delaySeconds = 0.5f;
+
+    [Header("Current Time Display")]
     public float timer = 0f;
+    
+    //This bool is used to determine if the player is currently scrolling or not.
+    public bool isScrolling = false;
 
 
     public void AnimateSwitchBone(float frameScrollValue)
@@ -64,71 +72,33 @@ public class MorseInput : MonoBehaviour, IScrollable
     }
 
     
-    public char ReturnDotOrDash(float frameScrollValue)
+    public void UpdateMorseString(float frameScrollValue)
     {
-    /*
-        if (frameScrollValue > 0)
-        {
-            previousScrollDirection = currentScrollDirection;
-            currentScrollDirection = ScrollDirection.Up;
-            Debug.Log("<color=green>Positive Scroll Value Recieved: " + frameScrollValue + " Dot</color>");
-            return '.';
-        }
-        else if (frameScrollValue < 0)
-        {
-            previousScrollDirection = currentScrollDirection;
-            currentScrollDirection = ScrollDirection.Down;
-            Debug.Log("<color=red>Negative Scroll Value Recieved: " + frameScrollValue + " Dash</color>");
-            return '-';
-        }
-        // Return a space if no scroll for x amount of time. 
-        // Only return space if the current scroll direction is different from the previous scroll direction. 
-        // This is to prevent multiple spaces from being added when the player is not scrolling.
-        else if (frameScrollValue == 0 && timer >= zeroInputTimer)
-        {
-            previousScrollDirection = currentScrollDirection;
-            currentScrollDirection = ScrollDirection.None;
-                        
-               if (previousScrollDirection != ScrollDirection.None)
-            {
-                Debug.Log("<color=blue>Zero Scroll Value Recieved: " + frameScrollValue + " Space</color>");
-                return ' ';
-            } 
-            
-            
-            else
-            {
-                return '\0'; // Return null character if no scroll and no change in direction
-            }
-        }
-        else
-        {
-            // Return a space if no scroll for x amount of time.
-            return '\0'; // Return null character if no scroll and no change in direction
-        }
-    */
-        
-        switch (currentScrollDirection)
+         switch (currentScrollDirection)
         {
             case ScrollDirection.Up:
                 currentMorseInput += ".";
-                return '.';
+                Debug.Log("<color=yellow>Add Dot to Current Morse Input: " + currentMorseInput + "</color>");
+                break;
             case ScrollDirection.Down:
                 currentMorseInput += "-";
-                return '-';
+                Debug.Log("<color=red>Add Dash to Current Morse Input: " + currentMorseInput + "</color>");
+                break;
             case ScrollDirection.None:
-                if (timer >= zeroInputTimer && previousScrollDirection != ScrollDirection.None)
+                if (timer >= delayForSpace && previousScrollDirection != ScrollDirection.None)
                 {
-                    return ' ';
+                    Debug.Log("<color=blue>Add Space to Current Morse Input: " + currentMorseInput + "</color>");
+                    currentMorseInput += " ";
                 }
-                else
-                {
-                    return '\0'; // Return null character if no scroll and no change in direction
-                }
+                break;
             default:
-                return '\0'; // Return null character if no scroll and no change in direction
+                break;
         }
+    }
 
+    void Start()
+    {
+        ResetAll();
     }
 
     public void ResetScrollDirection()
@@ -158,61 +128,63 @@ public class MorseInput : MonoBehaviour, IScrollable
 
     public void CheckForSpace(float frameScrollValue)
     {
-        if (frameScrollValue == 0 && timer >= zeroInputTimer)
+        if (frameScrollValue == 0 && timer >= delayForSpace && previousScrollDirection != ScrollDirection.None && currentScrollDirection != ScrollDirection.None)
         {
             previousScrollDirection = currentScrollDirection;
             currentScrollDirection = ScrollDirection.None;
 
-            if (previousScrollDirection != ScrollDirection.None && timer >= zeroInputTimer)
-            {
-                Debug.Log("<color=blue>Zero Scroll Value Recieved: " + frameScrollValue + " Space</color>");
-            }
+            Debug.Log("<color=blue>Zero Scroll Value Recieved: " + frameScrollValue + " Space</color>");
+            
+            Debug.Log("<color=blue>Add Space to Current Morse Input: " + currentMorseInput + "</color>");
+            currentMorseInput += " ";
+            isScrolling = false;   
         }
     }
 
+    //This function checks for a dot or dash based on the scroll value and updates the current morse input accordingly.
     public void CheckForDotOrDash(float frameScrollValue)
     {
-        if (frameScrollValue > 0)
+        if (frameScrollValue < 0 && timer >= delaySeconds)
         {
             previousScrollDirection = currentScrollDirection;
             currentScrollDirection = ScrollDirection.Up;
             Debug.Log("<color=green>Positive Scroll Value Recieved: " + frameScrollValue + " Dot</color>");
+            currentMorseInput += ".";
+            Debug.Log("<color=yellow>Add Dot to Current Morse Input: " + currentMorseInput + "</color>");
+            isScrolling = false;   
         }
-        else if (frameScrollValue < 0)
+        else if (frameScrollValue > 0 && timer >= delaySeconds)
         {
             previousScrollDirection = currentScrollDirection;
             currentScrollDirection = ScrollDirection.Down;
             Debug.Log("<color=red>Negative Scroll Value Recieved: " + frameScrollValue + " Dash</color>");
+            currentMorseInput += "-";
+            Debug.Log("<color=red>Add Dash to Current Morse Input: " + currentMorseInput + "</color>");
+            isScrolling = false;
         }
     }
 
-    void Update()
+    
+
+    
+ void FixedUpdate()
     {
-        //Reset the scroll timer if the player is scrolling
-        if (currentScrollDirection != ScrollDirection.None)
+        if (!isScrolling)
         {
-            timer = 0f;
+            ResetTimer();
+            isScrolling = true;
         }
-        while (timer < zeroInputTimer)
+        else
         {
-            timer += Time.deltaTime;
-        }
+            timer += Time.fixedDeltaTime;
+        } 
     }
-
-
-
-
-    //Animate the bone of input switch
 
 
     public void WasScrolled(float frameScrollValue)
     {
-        //if you want to double chekc nly output when not 0
-        
+        //if you want to double chekc nly output when not 0  
         CheckForDotOrDash(frameScrollValue);
         CheckForSpace(frameScrollValue);
-
-
     }
-
 }

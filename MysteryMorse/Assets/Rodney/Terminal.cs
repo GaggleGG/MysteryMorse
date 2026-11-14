@@ -14,7 +14,7 @@ public class Terminal : MonoBehaviour
     public GameObject morseInput;
     private Morse morseRef;
 
-    private string currentInput = "";
+    public string currentInput = "";
     
 
 
@@ -27,6 +27,11 @@ public class Terminal : MonoBehaviour
         currentInput = morseInput.GetComponent<MorseInput>().currentMorseInput;
     }
 
+
+    void Update()
+    {
+        UpdateInput();
+    }
 
     [ContextMenu("Clear Input")]
     public void ClearInput()
