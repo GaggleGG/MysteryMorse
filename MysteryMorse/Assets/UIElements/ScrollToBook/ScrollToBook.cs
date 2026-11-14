@@ -59,20 +59,20 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             if (useScrollBook && bookOpen == false) {
                 //Sets the book UI to active
                 setUIActive(book);
+                scrollable = false;
                 //Starts a coroutine to smoothly move the book up
                 StartCoroutine(MoveBook(bookOffScreen, bookCenter, 2));
                 
                 //Changes the book open state and sets scrollable to false
                 bookOpen = true;
-                scrollable = false;
             //If the player is hovering the scroll book and the book is open
             } else if (useScrollBook && bookOpen == true) {
+                scrollable = false;
                 //Starts a coroutine to smoothly move the book down
                 StartCoroutine(MoveBook(bookCenter, bookOffScreen, 2));      
 
                 //Changes the book open state and sets scrollable to false
                 bookOpen = false;
-                scrollable = false;
             }
         }
     }
@@ -137,5 +137,7 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             book.rectTransform.anchoredPosition = bookOffScreen;
             setUIInactive(book);
         }
+
+        scrollable = true;
     }
 }
