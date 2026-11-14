@@ -783,7 +783,7 @@ MonoBehaviour:
   minNum: 0
   maxNum: 9
   pos0x: 1.04
-  pos9x: -1.5
+  pos9x: -1.14
   speedRestrict: 5
 --- !u!212 &746692091
 SpriteRenderer:
@@ -2005,7 +2005,7 @@ MonoBehaviour:
   maxNum: 9
   pos0x: 1.04
   pos9x: -1.14
-  speedRestrict: 5
+  speedRestrict: 6
 --- !u!65 &2010276827
 BoxCollider:
   m_ObjectHideFlags: 0
