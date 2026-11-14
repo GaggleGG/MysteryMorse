@@ -3,20 +3,23 @@ using UnityEngine;
 
 public class PosterScroll : ScrollToPoint
 {
-    BoxCollider Col;
+    [SerializeField] Transform MaskTrans;
+    //BoxCollider Col;
 
     //position of sprite mask obj
-    Vector3 startPos;
-    public Vector3 endPos;
+    Vector3 maskStartPos;
+    public Vector3 maskEndPos;
 
+    //positions of scrollable collider obj
     Vector3 colStartPos;
-    public Vector3 colEndPos;    
+
+    public Vector3 colEndPos;
 
 
     bool done = false; //poster is pulled all the way down
 
-    Vector3 startSize;
-    [SerializeField] Vector3 endSize;
+    Vector3 colStartSize;
+    [SerializeField] Vector3 colEndSize;
 
     [SerializeField] AnimationCurve scalingCurve;
 
@@ -27,13 +30,13 @@ public class PosterScroll : ScrollToPoint
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        startPos = transform.localPosition;
+        colStartPos = transform.localPosition;
 
-        Col = GetComponent<BoxCollider>();
-        startSize = Col.size;
-        colStartPos = Col.center;
+        colStartSize = transform.localScale;
+        colStartPos = transform.localPosition;
 
-        Vector3 currentSize = Col.size;
+        maskStartPos = MaskTrans.localPosition;
+
 
     }
 
@@ -49,15 +52,18 @@ public class PosterScroll : ScrollToPoint
 
         //update collider size
         //currentSize.Set(Col.size.x, Mathf.Lerp(startSize, endSize, slideValue/targetValue) , Col.size.z);
-        currentSize = Vector3.Lerp(startSize, endSize, scalingCurve.Evaluate(slideValue/targetValue));
-        Col.size = currentSize;
+        //currentSize = Vector3.Lerp(startSize, endSize, scalingCurve.Evaluate(slideValue/targetValue));
+        //Col.size = currentSize;
+        
+        //adjust col transform
+        transform.localScale = Vector3.Lerp(colStartSize, colEndSize, scalingCurve.Evaluate(slideValue/targetValue));
+        transform.localPosition = Vector3.Lerp(colStartPos, colEndPos, scalingCurve.Evaluate(slideValue/targetValue));
 
-        Col.center = Vector3.Lerp(colStartPos, colEndPos, scalingCurve.Evaluate(slideValue/targetValue));
 
-
+        //adjust mask transform
+        MaskTrans.localPosition = Vector3.Lerp(maskStartPos, maskEndPos, scalingCurve.Evaluate(slideValue/targetValue));
 
         //move position
-        transform.localPosition = Vector3.Lerp(startPos, endPos, slideValue/targetValue);
 
     }
 

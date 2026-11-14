@@ -1,7 +1,8 @@
 using Mono.Cecil.Cil;
 using System.Collections.Generic;
 using UnityEngine;
-public class Morse : MonoBehaviour {
+public class Morse 
+{
     //Morse code Dictionary
     static Dictionary<char, string> Code = new() {
         ['a'] = ".-",
