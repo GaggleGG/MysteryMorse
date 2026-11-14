@@ -1,9 +1,14 @@
 fileFormatVersion: 2
-guid: 7c627e7c9d37016459baa105a0fc51d3
+guid: 6c2e8fbea5f6c214abbe5cf3e50a01a0
 ModelImporter:
   serializedVersion: 24300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ticketprintermat
+    second: {fileID: 2100000, guid: 67419d10ffcb5014aa8fe7a238ee39fd, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

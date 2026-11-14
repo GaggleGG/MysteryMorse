@@ -1,9 +1,14 @@
 fileFormatVersion: 2
-guid: 5c0eb17f98b6ff64f9f6d9b9da8e8963
+guid: 920171d1e21120b4ab9044e49bccaf0f
 ModelImporter:
   serializedVersion: 24300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: morsewitchmat
+    second: {fileID: 2100000, guid: 62716b5e504e96243a56e249fbcb152a, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
