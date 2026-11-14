@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 183327662}
   - component: {fileID: 183327661}
   - component: {fileID: 183327660}
-  - component: {fileID: 183327659}
+  - component: {fileID: 183327664}
   m_Layer: 0
   m_Name: ScrollableCube
   m_TagString: Untagged
@@ -139,18 +139,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &183327659
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 183327658}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e67c6b772c3651443bc25a69512d5474, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ScrollableCube
 --- !u!65 &183327660
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -244,6 +232,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &183327664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 183327658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a9e7af5abd3b5a42bfbfd3234641d25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Safe
+  sprites: []
+  minNum: 0
+  maxNum: 9
 --- !u!1 &308522659
 GameObject:
   m_ObjectHideFlags: 0
@@ -576,7 +579,7 @@ GameObject:
   - component: {fileID: 1221946094}
   - component: {fileID: 1221946098}
   m_Layer: 0
-  m_Name: Safe
+  m_Name: MusicBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -688,6 +691,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Safe
   maxNum: 30
+  rotateDivider: 360
 --- !u!1 &1466391698
 GameObject:
   m_ObjectHideFlags: 0

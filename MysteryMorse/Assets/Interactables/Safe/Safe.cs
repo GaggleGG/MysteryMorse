@@ -2,25 +2,24 @@ using UnityEngine;
 
 public class Safe : MonoBehaviour, IScrollable
 {
-    //what the safe's current number is
-    private int currentNum;
-    //the max number before looping
-    public int maxNum = 60;
-    //to control how fast safe rotates
-    public float rotateDivider = 360;
-    
+    //the number the player is on
+    private int currentNum = 0;
+    //sprite array
+    public Sprite[] sprites;
+    //min and max values
+    public int minNum = 0;
+    public int maxNum = 9;
+
     public void WasScrolled(float frameScrollValue)
     {
-        //add scroll value and cast to int (rounding up)
+        //Increment current num based on scroll value
         currentNum += Mathf.RoundToInt(frameScrollValue);
-        //clamps to make sure that number will not be over max number or below 0
-        if (currentNum > maxNum) currentNum = 0;
-        if (currentNum < 0) currentNum = maxNum;
-
+        //clamp based on min and max
+        if (currentNum < minNum) currentNum = maxNum;
+        if (currentNum > maxNum) currentNum = minNum;
         Debug.Log("Safe number" + currentNum);
 
-        //rotate
-        gameObject.transform.Rotate((Vector3.forward * frameScrollValue) * rotateDivider,Space.World);
+        //change sprite of safe
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
