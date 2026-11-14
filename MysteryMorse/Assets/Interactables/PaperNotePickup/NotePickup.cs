@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 //Note to be added to the book
 public class NotePickup : ScrollToPoint
@@ -7,10 +8,11 @@ public class NotePickup : ScrollToPoint
     Vector3 startPos;
     public Vector3 endPos;
     bool collected = false;
-    
 
+    public int solutionID;
 
-    
+    public Image bookIcon;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -25,7 +27,7 @@ public class NotePickup : ScrollToPoint
     // Update is called once per frame
     void Update()
     {
-        
+
     }
     
     public override void WasScrolled(float frameScrollValue)
@@ -36,10 +38,7 @@ public class NotePickup : ScrollToPoint
         {
             collected = true;
 
-
-            //add note to book inventory
-            Debug.Log("Collect Note!");
-
+            bookIcon.GetComponent<ScrollToBook>().CollectNote(solutionID);
         }
     }
 

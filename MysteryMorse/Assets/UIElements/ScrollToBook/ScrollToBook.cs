@@ -1,5 +1,8 @@
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -18,6 +21,8 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     //Actual book UI element
     [SerializeField] private Image book;
+
+    public List<Image> bookElements;
 
     //Bool that determines if the book is being scrolled over
     private bool useScrollBook;
@@ -75,6 +80,10 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
                 bookOpen = false;
             }
         }
+    }
+
+    public void CollectNote(int solutionID) {
+        setUIActive(bookElements[solutionID]);
     }
 
     //Sets the using book variable to true when the player scrolls over the specific UI element
