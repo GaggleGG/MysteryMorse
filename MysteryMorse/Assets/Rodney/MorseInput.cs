@@ -163,7 +163,7 @@ public class MorseInput : MonoBehaviour, IScrollable
             previousScrollDirection = currentScrollDirection;
             currentScrollDirection = ScrollDirection.None;
 
-            if (previousScrollDirection != ScrollDirection.None)
+            if (previousScrollDirection != ScrollDirection.None && timer >= zeroInputTimer)
             {
                 Debug.Log("<color=blue>Zero Scroll Value Recieved: " + frameScrollValue + " Space</color>");
             }
