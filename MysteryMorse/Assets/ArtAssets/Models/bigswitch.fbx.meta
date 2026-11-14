@@ -3,7 +3,12 @@ guid: 3a5152c97d4987e49a527527c2c137c9
 ModelImporter:
   serializedVersion: 24300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: bigswitchmat
+    second: {fileID: 2100000, guid: 20b4316e8e938bf48a73e148c0bd8de8, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
