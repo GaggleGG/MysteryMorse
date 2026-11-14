@@ -92,7 +92,7 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     }
 
     public void FlipToPage(int pageNumber) {
-        for ()
+        //for ()
     }
 
     //Sets the using book variable to true when the player scrolls over the specific UI element
