@@ -22,7 +22,11 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     //Actual book UI element
     [SerializeField] private Image book;
 
+    //List of book elements to collect
     public List<Image> bookElements;
+
+    //Current page index
+    private int pageIndex = 0;
 
     //Bool that determines if the book is being scrolled over
     private bool useScrollBook;
@@ -82,8 +86,13 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         }
     }
 
+    //Method that is called by notes to activate corresponding elements in the book
     public void CollectNote(int solutionID) {
         setUIActive(bookElements[solutionID]);
+    }
+
+    public void FlipToPage(int pageNumber) {
+        for ()
     }
 
     //Sets the using book variable to true when the player scrolls over the specific UI element

@@ -38,6 +38,7 @@ public class NotePickup : ScrollToPoint
         {
             collected = true;
 
+            //Gets the book, then its script, and then calls the collect note method with the note's solution ID passed in
             bookIcon.GetComponent<ScrollToBook>().CollectNote(solutionID);
         }
     }
