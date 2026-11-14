@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -27,6 +28,10 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     //Scrollable value, which determines if the book can be interacted with or not
     private bool scrollable = false;
 
+    //Book positions
+    private Vector2 bookCenter = new Vector2(0, 0);
+    private Vector2 bookOffScreen = new Vector2(0, -1000);
+
     //Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start() {
         //Scroll input action
@@ -52,16 +57,22 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         if (scrollValue != Vector2.zero && scrollable == true) {
             //If the player is hovering the scroll book and the book is not open
             if (useScrollBook && bookOpen == false) {
+                //Sets the book UI to active
+                setUIActive(book);
                 //Changes the book's position to be on the center of the screen
-                book.rectTransform.anchoredPosition = new Vector2(0, 0);
-
+                //book.rectTransform.anchoredPosition = Vector2.Lerp(bookOffScreen, bookCenter, .2f);
+                book.rectTransform.anchoredPosition = bookCenter;
+                
                 //Changes the book open state and sets scrollable to false
                 bookOpen = true;
                 scrollable = false;
             //If the player is hovering the scroll book and the book is open
             } else if (useScrollBook && bookOpen == true) {
                 //Changes the book's position to be off the screen
-                book.rectTransform.anchoredPosition = new Vector2(0, -1000);
+                //book.rectTransform.anchoredPosition = Vector2.Lerp(bookCenter, bookOffScreen, .2f);
+                book.rectTransform.anchoredPosition = bookOffScreen;
+                //Sets the book UI to active
+                setUIInactive(book);
 
                 //Changes the book open state and sets scrollable to false
                 bookOpen = false;
@@ -98,7 +109,7 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         UIObject.gameObject.SetActive(true);
     }
 
-    void setUIActive(GameObject UIObject) {
+    void setUIActive(Image UIObject) {
         UIObject.gameObject.SetActive(true);
     }
 
@@ -107,7 +118,7 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         UIObject.gameObject.SetActive(false);
     }
 
-    void setUIInactive(GameObject UIObject) {
+    void setUIInactive(Image UIObject) {
         UIObject.gameObject.SetActive(false);
     }
 }
