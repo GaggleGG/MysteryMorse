@@ -18,7 +18,8 @@ public class Lamp : ScrollToPoint
 
 
     //Amount pulled to flip lamp
-    public float lightFlipThreshhold = 70;
+    public float lightLockThreshhold = 90;
+    bool locked = false;
 
 
 
@@ -55,6 +56,19 @@ public class Lamp : ScrollToPoint
             Debug.Log("frame scroll val: " + frameScrollValue);
             base.WasScrolled(frameScrollValue);
             scrollFrameTimer = 0;
+
+
+            if(!locked && slideValue == 100)
+            {
+                FlipLight();
+                locked = true;
+            }
+
+            if(slideValue <= lightLockThreshhold)
+            {
+                locked = false;
+            }
+
         }
 
 
