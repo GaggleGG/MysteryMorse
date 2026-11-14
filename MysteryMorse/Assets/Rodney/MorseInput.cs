@@ -13,26 +13,49 @@ public class MorseInput : MonoBehaviour, IScrollable
         None
     };
 
-    private ScrollDirection currentScrollDirection = ScrollDirection.None;
-    [SerializeField]
-    private float zeroInputTimer = 3f;
     private ScrollDirection previousScrollDirection = ScrollDirection.None;
+    private ScrollDirection currentScrollDirection = ScrollDirection.None;
+
+    
+
+    //switch bone rotation constraints
+    [Header("Switch Bone Rotation Constraints")]
+    [SerializeField]
+    private float maxZRotation = 115f;
+    [SerializeField]
+    private float minZRotation = 60f;
+    [SerializeField]
+    private float currentZRotation = 90f;
+    [SerializeField]
+    private float rotationSpeed = 100f;
+
+    [Header("No Scroll Input Timer")]
+    [SerializeField]
+    public float zeroInputTimer = 3f;
+
+    public float timer = 0f;
 
 
     public void AnimateSwitchBone(float frameScrollValue)
     {
         if (frameScrollValue > 0)
         {
-            SwitchBone.transform.localRotation = Quaternion.Euler(0, 0, 45);
+            LerpSwitchBoneRotation(maxZRotation);
         }
         else if (frameScrollValue < 0)
         {
-            SwitchBone.transform.localRotation = Quaternion.Euler(0, 0, -45);
+            LerpSwitchBoneRotation(minZRotation);
         }
         else
         {
-            SwitchBone.transform.localRotation = Quaternion.Euler(0, 0, 0);
+            LerpSwitchBoneRotation(currentZRotation);
         }
+    }
+
+    public void LerpSwitchBoneRotation(float targetZRotation)
+    {
+        currentZRotation = Mathf.Lerp(currentZRotation, targetZRotation, rotationSpeed * Time.deltaTime);
+        SwitchBone.transform.localEulerAngles = new Vector3(SwitchBone.transform.localEulerAngles.x, SwitchBone.transform.localEulerAngles.y, currentZRotation);
     }
 
     
@@ -53,20 +76,17 @@ public class MorseInput : MonoBehaviour, IScrollable
         // Return a space if no scroll for x amount of time. 
         // Only return space if the current scroll direction is different from the previous scroll direction. 
         // This is to prevent multiple spaces from being added when the player is not scrolling.
-        else if (frameScrollValue == 0)
+        else if (frameScrollValue == 0 && timer >= zeroInputTimer)
         {
             previousScrollDirection = currentScrollDirection;
             currentScrollDirection = ScrollDirection.None;
-            
-            while (zeroInputTimer < 3f)
-            {
-                zeroInputTimer += Time.deltaTime;
-                
-            }
-            if (previousScrollDirection != currentScrollDirection)
+                        
+               if (previousScrollDirection != ScrollDirection.None)
             {
                 return ' ';
-            }
+            } 
+            
+            
             else
             {
                 return '\0'; // Return null character if no scroll and no change in direction
@@ -89,11 +109,11 @@ public class MorseInput : MonoBehaviour, IScrollable
         //Reset the scroll timer if the player is scrolling
         if (currentScrollDirection != ScrollDirection.None)
         {
-            zeroInputTimer = 0f;
+            timer = 0f;
         }
-        while (zeroInputTimer < 3f)
+        while (timer < zeroInputTimer)
         {
-            zeroInputTimer += Time.deltaTime;
+            timer += Time.deltaTime;
         }
     }
 
