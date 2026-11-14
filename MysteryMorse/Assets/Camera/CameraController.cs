@@ -38,7 +38,7 @@ public class CameraController : MonoBehaviour
         if(useScrollCamera)
         {
             mainCamera.transform.localRotation = Quaternion.Euler(mainCamera.transform.localEulerAngles.x,
-            mainCamera.transform.localEulerAngles.y + (scrollValue.y * rotSensitivity),
+            mainCamera.transform.localEulerAngles.y + (-scrollValue.y * rotSensitivity),
             mainCamera.transform.localEulerAngles.z);
         }
         else
@@ -50,7 +50,7 @@ public class CameraController : MonoBehaviour
             {
                 if(hit.collider.TryGetComponent<IScrollable>(out IScrollable scrollableObject))
                 {
-                    scrollableObject.WasScrolled(scrollValue.y);
+                    scrollableObject.WasScrolled(-scrollValue.y);
                 }
             }
         }
