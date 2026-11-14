@@ -55,7 +55,7 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     //Update is called once per frame
     void Update() {
-        Debug.Log(pageIndex);
+        //Debug.Log(pageIndex);
 
         //Reads the current mouse and scroll wheel valuesS
         mousePosition = Mouse.current.position.ReadValue();
