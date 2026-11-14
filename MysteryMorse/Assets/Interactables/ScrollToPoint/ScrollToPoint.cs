@@ -18,7 +18,7 @@ public class ScrollToPoint : MonoBehaviour, IScrollable
     {
         
     }
-    public void WasScrolled(float frameScrollValue)
+    public virtual void WasScrolled(float frameScrollValue)
     {
         slideValue += frameScrollValue * increaseMod;
         if(slideValue < 0)
@@ -27,6 +27,7 @@ public class ScrollToPoint : MonoBehaviour, IScrollable
         {
             slideValue = 100;
         }
+
         UpdateVisuals();
     }
 
