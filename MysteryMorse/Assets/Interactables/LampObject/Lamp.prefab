@@ -197,7 +197,7 @@ MonoBehaviour:
   CordTrans: {fileID: 491833649174399328}
   cordEndPos: {x: -0.19, y: -0.401, z: 0.32}
   lightLockThreshhold: 90
-  scrollingFrameWindow: 4
+  scrollingFrameWindow: 5
 --- !u!65 &414940758495410042
 BoxCollider:
   m_ObjectHideFlags: 0
