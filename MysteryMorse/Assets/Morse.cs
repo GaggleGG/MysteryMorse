@@ -44,8 +44,8 @@ public class Morse
     };
 
     //Solutions for the terminal
-    static Dictionary<string, string> Solutions = new()
+    static Dictionary<string, int> Solutions = new()
     {
-        [""] = ""
+        [""] = 0
     };
 }

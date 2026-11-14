@@ -1,5 +1,6 @@
 using UnityEngine;
-
+using UnityEngine.UI;
+using TMPro;
 public class SafeLock : MonoBehaviour, IScrollable
 {
 
@@ -12,22 +13,31 @@ public class SafeLock : MonoBehaviour, IScrollable
     public float pos9x;
     //restrict movement speed
     public float speedRestrict;
+    //text for lock
+    TextMeshPro numText;
 
+
+    void Start()
+    {
+       
+    }
     public void WasScrolled(float frameScrollValue)
     {
         //Increment current num based on scroll value
         currentNum -= Mathf.RoundToInt(frameScrollValue);
         //clamp based on min and max
+        //if lower than min num
         if (currentNum < minNum) 
         { 
             currentNum = maxNum;
-            //reset sprite
+            //reset sprite to position of 9
             gameObject.transform.position = new Vector3 (pos9x,transform.position.y, transform.position.z);
         }
+        //if higher than max num
         if (currentNum > maxNum) 
         { 
             currentNum = minNum;
-            //reset sprite
+            //reset sprite to position of 0
             gameObject.transform.position = new Vector3 (pos0x, transform.position.y, transform.position.z);
         }
         Debug.Log("lock number" + currentNum);
@@ -37,10 +47,7 @@ public class SafeLock : MonoBehaviour, IScrollable
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    
 
     // Update is called once per frame
     void Update()
