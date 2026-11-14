@@ -1,29 +1,58 @@
+using Unity.VisualScripting;
 using UnityEngine;
  
-public class Lamp : MonoBehaviour, IScrollable 
+public class Lamp : ScrollToPoint
 {
     [SerializeField] Light LampLight;
+    [SerializeField] Transform CordTrans;
+    Vector3 cordStartPos;
+    [SerializeField] Vector3 cordEndPos;
+
+    float prevSlideVal;
+
     public enum GameState
     {
         On,
         Off
     }
-    //Creates value to track the scroll movement and on state
-    float minCord = 0;
-    float maxCord = 10;
+
+
+    //Amount pulled to flip lamp
+    float flipThreshhold = 70;
+
+
+
     bool onState = true;
-    float cordPosition;
+    //float cordPosition;
     bool isScrolling;
     bool flippable;
 
 
-    GameState LampState;
     //An enumerator to be sent to different events for event specific actions.
+    GameState LampState;
+
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        
+    }
    
 
     //Activates once the mouse is scrolling over the object
     public void WasScrolled(float frameScrollValue)
     {
+
+        if(frameScrollValue > 0)
+        {
+            
+        }
+
+
+
+
+
+        /*
         //Adds the scrolling value to the cordPosition to create a value.
         cordPosition += frameScrollValue;
         cordPosition = Mathf.Clamp(cordPosition, minCord, maxCord);
@@ -61,42 +90,34 @@ public class Lamp : MonoBehaviour, IScrollable
        
         
         LightCheck();
+
+        */
     }
 
 
-    public void LightCheck()
+    //flips to opposite light state
+    public void FlipLight()
     {
-        
-        switch (LampState)
-        {
-            case GameState.On:
-                
-                LampLight.gameObject.SetActive(true);
-                break;
-            case GameState.Off:
-                
-                LampLight.gameObject.SetActive(false);
-                break;
-
-        }
+        onState = !onState;
+        SetLight(onState);
     }
 
-    public void LightOn()
+    //sets to specific light on state (true = on, false = off)
+    public void SetLight(bool isOn)
     {
-        
+        onState = isOn;
+        LampLight.gameObject.SetActive(onState);
     }
 
 
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(!isScrolling)
+        {
+            slideValue = Mathf.MoveTowards(slideValue, 0, 1 * Time.deltaTime);
+        }
     }
 }
