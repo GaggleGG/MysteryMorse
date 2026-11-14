@@ -59,20 +59,16 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             if (useScrollBook && bookOpen == false) {
                 //Sets the book UI to active
                 setUIActive(book);
-                //Changes the book's position to be on the center of the screen
+                //Starts a coroutine to smoothly move the book up
                 StartCoroutine(MoveBook(bookOffScreen, bookCenter, 2));
-                
                 
                 //Changes the book open state and sets scrollable to false
                 bookOpen = true;
                 scrollable = false;
             //If the player is hovering the scroll book and the book is open
             } else if (useScrollBook && bookOpen == true) {
-                //Changes the book's position to be off the screen
-                StartCoroutine(MoveBook(bookCenter, bookOffScreen, 2));
-
-                //Sets the book UI to active
-                
+                //Starts a coroutine to smoothly move the book down
+                StartCoroutine(MoveBook(bookCenter, bookOffScreen, 2));      
 
                 //Changes the book open state and sets scrollable to false
                 bookOpen = false;
@@ -122,19 +118,24 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         UIObject.gameObject.SetActive(false);
     }
 
+    //Method that animates the book while it moves position
     IEnumerator MoveBook(Vector2 from, Vector2 to, float speed) {
+        //Interval
         var t = 0f;
 
+        //While it has not reached the interval, lerps the book
         while (t <= 1f) {
             t += speed * Time.deltaTime;
             book.rectTransform.anchoredPosition = Vector2.Lerp(from, to, t);
             yield return null;
         }
 
+        //Sets the true position of the book at the end of the coroutine based on where it is being moved
         if (to == bookCenter) {
             book.rectTransform.anchoredPosition = bookCenter;
         } else {
             book.rectTransform.anchoredPosition = bookOffScreen;
+            setUIInactive(book);
         }
     }
 }
