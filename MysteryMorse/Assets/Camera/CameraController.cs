@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 public class CameraController : MonoBehaviour
 {
     [SerializeField]
-    private float rotSensitivity = 0.7f;
+    private float rotSensitivity = 1f;
 
     //InputActions
     private InputAction Scroll;
@@ -33,12 +33,26 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        mousePosition = Mouse.current.position.ReadValue();
         Vector2 scrollValue = Scroll.ReadValue<Vector2>();
         if(useScrollCamera)
         {
             mainCamera.transform.localRotation = Quaternion.Euler(mainCamera.transform.localEulerAngles.x,
             mainCamera.transform.localEulerAngles.y + (scrollValue.y * rotSensitivity),
             mainCamera.transform.localEulerAngles.z);
+        }
+        else
+        {
+            Ray ray = mainCamera.ScreenPointToRay(mousePosition);
+            RaycastHit hit;
+
+            if(Physics.Raycast(ray, out hit))
+            {
+                if(hit.collider.TryGetComponent<IScrollable>(out IScrollable scrollableObject))
+                {
+                    scrollableObject.WasScrolled(scrollValue.y);
+                }
+            }
         }
     }
 

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class IScrollable
+public interface IScrollable
 {
-    
+    public void WasScrolled(float frameScrollValue);
 }
