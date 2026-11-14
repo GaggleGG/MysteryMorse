@@ -3,7 +3,7 @@ using UnityEngine;
 public class Lamp : MonoBehaviour, IScrollable 
 {
     [SerializeField] Light LampLight;
-    private enum GameState
+    public enum GameState
     {
         On,
         Off
