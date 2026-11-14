@@ -7,6 +7,7 @@ public class NotePickup : ScrollToPoint
     Vector3 startPos;
     public Vector3 endPos;
     bool collected = false;
+    
 
 
     

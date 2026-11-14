@@ -5,7 +5,7 @@ public class ScrollToPoint : MonoBehaviour, IScrollable
     protected float slideValue = 0;
     protected float targetValue = 100;
 
-    float increaseMod = 5;
+    public float increaseMod = 5;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
