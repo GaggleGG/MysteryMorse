@@ -735,7 +735,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 491833649174399328, guid: 763d4f6d4b7041c40bebd82326f38db7, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.2094
+      value: 1.7877351
       objectReference: {fileID: 0}
     - target: {fileID: 491833649174399328, guid: 763d4f6d4b7041c40bebd82326f38db7, type: 3}
       propertyPath: m_LocalScale.z
@@ -743,15 +743,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 491833649174399328, guid: 763d4f6d4b7041c40bebd82326f38db7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.436
+      value: -0.19
       objectReference: {fileID: 0}
     - target: {fileID: 491833649174399328, guid: 763d4f6d4b7041c40bebd82326f38db7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.108
+      value: 0.168
       objectReference: {fileID: 0}
     - target: {fileID: 491833649174399328, guid: 763d4f6d4b7041c40bebd82326f38db7, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.116
+      value: 0.32
       objectReference: {fileID: 0}
     - target: {fileID: 1225635660986246404, guid: 763d4f6d4b7041c40bebd82326f38db7, type: 3}
       propertyPath: m_Name
@@ -828,6 +828,22 @@ PrefabInstance:
     - target: {fileID: 5217314171678912317, guid: 763d4f6d4b7041c40bebd82326f38db7, type: 3}
       propertyPath: m_Name
       value: LampLight
+      objectReference: {fileID: 0}
+    - target: {fileID: 8501574487950338779, guid: 763d4f6d4b7041c40bebd82326f38db7, type: 3}
+      propertyPath: CordTrans
+      value: 
+      objectReference: {fileID: 671356329}
+    - target: {fileID: 8501574487950338779, guid: 763d4f6d4b7041c40bebd82326f38db7, type: 3}
+      propertyPath: cordEndPos.x
+      value: -0.19
+      objectReference: {fileID: 0}
+    - target: {fileID: 8501574487950338779, guid: 763d4f6d4b7041c40bebd82326f38db7, type: 3}
+      propertyPath: cordEndPos.y
+      value: -0.401
+      objectReference: {fileID: 0}
+    - target: {fileID: 8501574487950338779, guid: 763d4f6d4b7041c40bebd82326f38db7, type: 3}
+      propertyPath: cordEndPos.z
+      value: 0.32
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5479650247217215134, guid: 763d4f6d4b7041c40bebd82326f38db7, type: 3}

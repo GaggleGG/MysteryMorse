@@ -18,7 +18,7 @@ public class Lamp : ScrollToPoint
 
 
     //Amount pulled to flip lamp
-    float flipThreshhold = 70;
+    public float lightFlipThreshhold = 70;
 
 
 
@@ -27,28 +27,35 @@ public class Lamp : ScrollToPoint
     bool isScrolling;
     bool flippable;
 
+    bool scrollReceived = false; //did you scroll this frame
+
 
     //An enumerator to be sent to different events for event specific actions.
     GameState LampState;
 
 
+
+    [SerializeField] int scrollingFrameWindow = 4;
+    int scrollFrameTimer = 0;
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        cordStartPos = CordTrans.localPosition;
     }
    
 
     //Activates once the mouse is scrolling over the object
-    public void WasScrolled(float frameScrollValue)
+    public override void WasScrolled(float frameScrollValue)
     {
-
+        //only scroll one direction (pulling cord down)
         if(frameScrollValue > 0)
         {
-            
+            Debug.Log("frame scroll val: " + frameScrollValue);
+            base.WasScrolled(frameScrollValue);
+            scrollFrameTimer = 0;
         }
-
-
 
 
 
@@ -115,9 +122,25 @@ public class Lamp : ScrollToPoint
     // Update is called once per frame
     void Update()
     {
+        //set isscrolling state
+        if(scrollFrameTimer <= scrollingFrameWindow)
+        {
+            //Debug.Log("Scrolling!");
+            isScrolling = true;
+            scrollFrameTimer++;
+        } else
+        {
+            //Debug.Log("NOT SCROLLING!!");
+            isScrolling = false;
+        }
+
         if(!isScrolling)
         {
-            slideValue = Mathf.MoveTowards(slideValue, 0, 1 * Time.deltaTime);
+            slideValue = Mathf.MoveTowards(slideValue, 0, 1000 * Time.deltaTime);
+            //Debug.Log("slideval: " + slideValue);
         }
+
+        CordTrans.localPosition = Vector3.Lerp(cordStartPos, cordEndPos, slideValue/targetValue);
+
     }
 }
