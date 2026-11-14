@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class PosterScroll : ScrollToPoint
 {
+    [SerializeField] SpriteRenderer PosterBody;
     [SerializeField] Transform MaskTrans;
     //BoxCollider Col;
 
@@ -49,11 +50,6 @@ public class PosterScroll : ScrollToPoint
     public override void WasScrolled(float frameScrollValue)
     {
         base.WasScrolled(frameScrollValue);
-
-        //update collider size
-        //currentSize.Set(Col.size.x, Mathf.Lerp(startSize, endSize, slideValue/targetValue) , Col.size.z);
-        //currentSize = Vector3.Lerp(startSize, endSize, scalingCurve.Evaluate(slideValue/targetValue));
-        //Col.size = currentSize;
         
         //adjust col transform
         transform.localScale = Vector3.Lerp(colStartSize, colEndSize, scalingCurve.Evaluate(slideValue/targetValue));
@@ -61,9 +57,16 @@ public class PosterScroll : ScrollToPoint
 
 
         //adjust mask transform
-        MaskTrans.localPosition = Vector3.Lerp(maskStartPos, maskEndPos, scalingCurve.Evaluate(slideValue/targetValue));
+        MaskTrans.localPosition = Vector3.Lerp(maskStartPos, maskEndPos, slideValue/targetValue);
 
-        //move position
+        if(slideValue >=80)
+        {
+            //play rip audio here:
+
+
+            //PosterBody.enabled = false;
+            gameObject.SetActive(false);
+        }
 
     }
 
