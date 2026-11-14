@@ -1,5 +1,7 @@
 using UnityEngine;
 
+
+
 public class Safe : MonoBehaviour
 {
     
@@ -20,6 +22,7 @@ public class Safe : MonoBehaviour
     bool lock2SFX = true;
     bool lock3SFX = true;
     bool lock4SFX = true;
+    
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
