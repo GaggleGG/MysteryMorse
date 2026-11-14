@@ -60,8 +60,8 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
                 //Sets the book UI to active
                 setUIActive(book);
                 //Changes the book's position to be on the center of the screen
-                //book.rectTransform.anchoredPosition = Vector2.Lerp(bookOffScreen, bookCenter, .2f);
-                book.rectTransform.anchoredPosition = bookCenter;
+                StartCoroutine(MoveBook(bookOffScreen, bookCenter, 2));
+                
                 
                 //Changes the book open state and sets scrollable to false
                 bookOpen = true;
@@ -69,10 +69,10 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             //If the player is hovering the scroll book and the book is open
             } else if (useScrollBook && bookOpen == true) {
                 //Changes the book's position to be off the screen
-                //book.rectTransform.anchoredPosition = Vector2.Lerp(bookCenter, bookOffScreen, .2f);
-                book.rectTransform.anchoredPosition = bookOffScreen;
+                StartCoroutine(MoveBook(bookCenter, bookOffScreen, 2));
+
                 //Sets the book UI to active
-                setUIInactive(book);
+                
 
                 //Changes the book open state and sets scrollable to false
                 bookOpen = false;
@@ -120,5 +120,21 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     void setUIInactive(Image UIObject) {
         UIObject.gameObject.SetActive(false);
+    }
+
+    IEnumerator MoveBook(Vector2 from, Vector2 to, float speed) {
+        var t = 0f;
+
+        while (t <= 1f) {
+            t += speed * Time.deltaTime;
+            book.rectTransform.anchoredPosition = Vector2.Lerp(from, to, t);
+            yield return null;
+        }
+
+        if (to == bookCenter) {
+            book.rectTransform.anchoredPosition = bookCenter;
+        } else {
+            book.rectTransform.anchoredPosition = bookOffScreen;
+        }
     }
 }
