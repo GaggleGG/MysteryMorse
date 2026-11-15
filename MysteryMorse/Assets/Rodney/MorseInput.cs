@@ -183,7 +183,7 @@ public class MorseInput : MonoBehaviour, IScrollable
         //if you want to double chekc nly output when not 0
         AnimateSwitchBone(frameScrollValue);  
         CheckForDotOrDash(frameScrollValue);
-        CheckForSpace(frameScrollValue);
+        //CheckForSpace(frameScrollValue);
         
     }
 }
