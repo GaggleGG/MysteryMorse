@@ -18,6 +18,6 @@ public class ScrollableCube : MonoBehaviour, IScrollable
     public void WasScrolled(float frameScrollValue)
     {
         //if you want to double chekc nly output when not 0
-        Debug.Log("Scroll Value Recieved: " + frameScrollValue);
+        //Debug.Log("Scroll Value Recieved: " + frameScrollValue);
     }
 }

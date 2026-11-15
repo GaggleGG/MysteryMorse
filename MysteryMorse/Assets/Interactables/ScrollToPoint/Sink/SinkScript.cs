@@ -7,7 +7,8 @@ public class SinkScript : ScrollToPoint
     float waterBreakpoint = 25;
     float smallSteamBreakpoint = 50;
 
-
+    public AudioSource waterAudio;
+    
 
     public GameObject Tap;
     public Vector3 StartTapRotation;
@@ -35,7 +36,10 @@ public class SinkScript : ScrollToPoint
         TapWater.Stop();
 
         MirriorFog.color = new Color(1,1,1,0);
-        MirriorFogBack.color = new Color(0,0,1,0);
+        MirriorFogBack.color = new Color(1,1,1,0);
+
+        //Set up audio source
+        waterAudio = GetComponent<AudioSource>();
         
     }
 
@@ -50,6 +54,19 @@ public class SinkScript : ScrollToPoint
         
     }
 
+    public void toggleAudio()
+    {
+        if(TapWater.isPlaying)
+        {
+            waterAudio.Play();
+        }
+        else
+        {
+            //if you want the source to resume from where it was use Pause, this should reset it every time
+            waterAudio.Stop();
+        }
+    }
+
     public override void UpdateVisuals()
     {
         Vector3 tapRotation = Vector3.Lerp(StartTapRotation, EndTapRotation, slideValue/targetValue);
@@ -62,6 +79,7 @@ public class SinkScript : ScrollToPoint
             {
                 TapWater.Stop();
                 sinkWaterRunning?.Invoke(false);
+                toggleAudio();
             }
         }
         else
@@ -70,6 +88,7 @@ public class SinkScript : ScrollToPoint
             {
                 TapWater.Play();
                 sinkWaterRunning?.Invoke(true);
+                toggleAudio();
             }
 
         }
@@ -94,7 +113,7 @@ public class SinkScript : ScrollToPoint
             }
             if(MirriorFogBack.color.a == 0)
             {
-                MirriorFogBack.color = new Color(0,0,1,1);
+                MirriorFogBack.color = new Color(1,1,1,1);
             }
         }
         else
