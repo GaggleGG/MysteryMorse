@@ -23,7 +23,7 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public List<Image> bookElements;
 
     //List of game objects already unlocked
-    private bool[] unlockedElements = new bool[12];
+    private bool[] unlockedElements = new bool[13];
 
     //Current page index
     private int pageIndex = 0;
@@ -58,6 +58,7 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         //Sets the alphabet and tutorial to active at the start
         unlockedElements[0] = true;
         unlockedElements[1] = true;
+        unlockedElements[12] = true;
     }
 
     //Update is called once per frame
@@ -77,16 +78,10 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
                 setUIActive(book);
                 //Starts a coroutine to smoothly move the book up
                 StartCoroutine(MoveBook(bookOffScreen, bookCenter, 2));
-                
-                //Changes the book open state and sets scrollable to false
-                bookOpen = true;
             //If the player is hovering the scroll book and the book is open
             } else if (useScrollBook && bookOpen == true) {
                 //Starts a coroutine to smoothly move the book down
                 StartCoroutine(MoveBook(bookCenter, bookOffScreen, 2));      
-
-                //Changes the book open state and sets scrollable to false
-                bookOpen = false;
             //If the player is not hovering the book icon and has the book open, they can flip pages
             } else if (!useScrollBook && bookOpen == true) {
                 //Flip pages left
@@ -109,14 +104,9 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         //Sets the corresponding element to unlocked
         unlockedElements[solutionID] = true;
 
-        //Forces the page index to be 1 and open the book
-        StartCoroutine(FlipToPage(1));
-
-        //Starts a coroutine to smoothly move the book up
+        //Sets the page index to 1 (where the tickets are), and starts a coroutine to smoothly move the book up
+        pageIndex = 1;
         StartCoroutine(MoveBook(bookOffScreen, bookCenter, 2));
-
-        //Sets book open to true
-        bookOpen = true;
     }
 
     //Sets the using book variable to true when the player scrolls over the specific UI element
@@ -160,6 +150,9 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         //Interval
         var t = 0f;
 
+        //Ensures the page setup is clean and correct
+        StartCoroutine(FlipToPage(pageIndex));
+
         //While it has not reached the interval, lerps the book
         while (t <= 1f) {
             t += speed * Time.deltaTime;
@@ -170,9 +163,15 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         //Sets the true position of the book at the end of the coroutine based on where it is being moved
         if (to == bookCenter) {
             book.rectTransform.anchoredPosition = bookCenter;
+
+            //Sets book open to true
+            bookOpen = true;
         } else {
             book.rectTransform.anchoredPosition = bookOffScreen;
             setUIInactive(book);
+
+            //Changes the book open state and sets scrollable to false
+            bookOpen = false;
         }
 
         //Resets scrollable when the animation is done
@@ -194,12 +193,9 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             //First page
             case 0:
                 //Alphabet/Tutorial
-                if (unlockedElements[0] == true) {
-                    setUIActive(bookElements[0]);
-                }
-                if (unlockedElements[1] == true) {
-                    setUIActive(bookElements[1]);
-                }
+                setUIActive(bookElements[0]);
+                setUIActive(bookElements[1]);
+                setUIActive(bookElements[12]);
 
                 //Page numbers
                 setUIActive(bookElements[8]);
