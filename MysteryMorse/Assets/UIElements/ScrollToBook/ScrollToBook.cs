@@ -153,6 +153,9 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         //Ensures the page setup is clean and correct
         StartCoroutine(FlipToPage(pageIndex));
 
+        //Audio for opening the book
+        this.GetComponent<AudioPlayer>().Play("Book Open");
+
         //While it has not reached the interval, lerps the book
         while (t <= 1f) {
             t += speed * Time.deltaTime;
@@ -187,6 +190,9 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         foreach (Image image in bookElements) {
             setUIInactive(image);
         }
+
+        //Audio for page flip
+        this.GetComponent<AudioPlayer>().Play("Page Flip");
 
         //Switch statement that reveals things on the page based on what is on the page and what the player has unlocked
         switch (pageIndex) {

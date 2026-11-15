@@ -917,7 +917,7 @@ MonoBehaviour:
   zipStartLocation: {x: -0.377, y: 0, z: -0.486}
   zipEndLocation: {x: 0.358, y: 0, z: -0.486}
   zipperSlide: {fileID: 555532703}
-  note: {fileID: 0}
+  Tag: {fileID: 0}
 --- !u!65 &1179712221
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6518,6 +6518,31 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8232237871029177439, guid: 9ac1578d6ad7d804cbc0f22f31f000f5, type: 3}
   m_PrefabInstance: {fileID: 9188343177377939551}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1641748798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1641748794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f345bbe7446c429d8103ed245a79b19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioPlayer
+  sounds:
+  - name: Dot
+    clip: {fileID: 8300000, guid: db7e38c4f4946d64fa43eeb9b5725049, type: 3}
+    volume: 0.647
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Dash
+    clip: {fileID: 8300000, guid: 38b8039b2627ad4499ad3f7137e72292, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
 --- !u!1 &1657913659
 GameObject:
   m_ObjectHideFlags: 0
@@ -11885,7 +11910,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6651654107007238451, guid: df5e4911bb8851d40bcc1b68766f0a94, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.3812704
+      value: -4.79
       objectReference: {fileID: 0}
     - target: {fileID: 6651654107007238451, guid: df5e4911bb8851d40bcc1b68766f0a94, type: 3}
       propertyPath: m_LocalPosition.y
@@ -11893,7 +11918,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6651654107007238451, guid: df5e4911bb8851d40bcc1b68766f0a94, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -6.9948587
+      value: -6.032
       objectReference: {fileID: 0}
     - target: {fileID: 6651654107007238451, guid: df5e4911bb8851d40bcc1b68766f0a94, type: 3}
       propertyPath: m_LocalRotation.w
@@ -12070,6 +12095,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6344057954692077733, guid: 9ac1578d6ad7d804cbc0f22f31f000f5, type: 3}
+      propertyPath: dotSound
+      value: 
+      objectReference: {fileID: 8300000, guid: db7e38c4f4946d64fa43eeb9b5725049, type: 3}
+    - target: {fileID: 6344057954692077733, guid: 9ac1578d6ad7d804cbc0f22f31f000f5, type: 3}
+      propertyPath: dashSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 38b8039b2627ad4499ad3f7137e72292, type: 3}
+    - target: {fileID: 6344057954692077733, guid: 9ac1578d6ad7d804cbc0f22f31f000f5, type: 3}
+      propertyPath: audioPlayer
+      value: 
+      objectReference: {fileID: 1641748798}
+    - target: {fileID: 6344057954692077733, guid: 9ac1578d6ad7d804cbc0f22f31f000f5, type: 3}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8232237871029177439, guid: 9ac1578d6ad7d804cbc0f22f31f000f5, type: 3}
       propertyPath: m_Name
       value: morseswitch
@@ -12117,7 +12158,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8232237871029177439, guid: 9ac1578d6ad7d804cbc0f22f31f000f5, type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 1641748798}
   m_SourcePrefab: {fileID: 100100000, guid: 9ac1578d6ad7d804cbc0f22f31f000f5, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
