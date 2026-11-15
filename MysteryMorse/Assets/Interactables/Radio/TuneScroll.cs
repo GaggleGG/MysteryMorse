@@ -17,12 +17,13 @@ public class TuneScroll : CircularScroll
     void Start()
     {
         radioAudio.StopAll();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-       
+        SetStation();
     }
 
     public override void WasScrolled(float frameScrollValue)
@@ -30,19 +31,19 @@ public class TuneScroll : CircularScroll
         base.WasScrolled(frameScrollValue);
         station = slideValue + 55.4f;
         displayObj.GetComponent<TextMeshPro>().text = station.ToString();
-        SetStation();
-
+       
     }
 
     
     void SetStation()
     {
-        if (station == secretStation)
+        
+        if (radioAudio.isPlaying("Code") == false && station == secretStation)
         {
             radioAudio.Play("Code");
             radioAudio.Stop("Static");
         }
-        else
+        else if(radioAudio.isPlaying("Static") == false)
         {
             radioAudio.Play("Static");
             radioAudio.Stop("Code");

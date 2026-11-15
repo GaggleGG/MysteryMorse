@@ -43,6 +43,15 @@ public class AudioPlayer : MonoBehaviour
         
     }
 
+    public bool isPlaying(string name)
+    {
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+
+        Debug.Log(s.name + " is playing");
+
+        return s.source.isPlaying;
+
+    }
 
     public void Stop (string name)
     {
