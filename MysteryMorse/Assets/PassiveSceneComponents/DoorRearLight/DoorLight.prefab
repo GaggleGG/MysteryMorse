@@ -141,9 +141,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LightController
   flashLight: {fileID: 331983920440147524}
-  message: sos
+  message: g
+  usingRawMessage: 0
   durationMultiplier: 4
   dotDuration: 0.2
   dashDuration: 0.4
-  letterSpaceDuration: 0.4
+  letterSpaceDuration: 0.2
   wordSpaceDuration: 0.6
