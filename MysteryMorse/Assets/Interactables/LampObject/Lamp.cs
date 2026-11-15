@@ -49,7 +49,9 @@ public class Lamp : ScrollToPoint
     void Start()
     {
         cordStartPos = CordTrans.localPosition;
-        increaseMod = 12;
+        
+        Debug.Log(cordStartPos);
+        Debug.Log(cordEndPos);
     }
    
 

@@ -950,6 +950,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Lamp
       objectReference: {fileID: 0}
+    - target: {fileID: 2205908678748890933, guid: 763d4f6d4b7041c40bebd82326f38db7, type: 3}
+      propertyPath: increaseMod
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 2205908678748890933, guid: 763d4f6d4b7041c40bebd82326f38db7, type: 3}
+      propertyPath: scrollingFrameWindow
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 2886134141416120617, guid: 763d4f6d4b7041c40bebd82326f38db7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1025,7 +1033,7 @@ PrefabInstance:
     - target: {fileID: 8501574487950338779, guid: 763d4f6d4b7041c40bebd82326f38db7, type: 3}
       propertyPath: CordTrans
       value: 
-      objectReference: {fileID: 671356329}
+      objectReference: {fileID: 0}
     - target: {fileID: 8501574487950338779, guid: 763d4f6d4b7041c40bebd82326f38db7, type: 3}
       propertyPath: cordEndPos.x
       value: -0.19
@@ -1046,11 +1054,6 @@ PrefabInstance:
 --- !u!4 &671356328 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5032420614500212548, guid: 763d4f6d4b7041c40bebd82326f38db7, type: 3}
-  m_PrefabInstance: {fileID: 671356327}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &671356329 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 491833649174399328, guid: 763d4f6d4b7041c40bebd82326f38db7, type: 3}
   m_PrefabInstance: {fileID: 671356327}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &678882916
