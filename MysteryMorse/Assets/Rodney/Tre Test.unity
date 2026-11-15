@@ -6533,7 +6533,7 @@ MonoBehaviour:
   sounds:
   - name: Dot
     clip: {fileID: 8300000, guid: db7e38c4f4946d64fa43eeb9b5725049, type: 3}
-    volume: 1
+    volume: 0.647
     pitch: 1
     loop: 0
     source: {fileID: 0}
