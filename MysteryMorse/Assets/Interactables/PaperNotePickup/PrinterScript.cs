@@ -7,7 +7,7 @@ public class PrinterScript : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        printTicket();
     }
 
     // Update is called once per frame
@@ -18,6 +18,7 @@ public class PrinterScript : MonoBehaviour
 
     public void printTicket()
     {
+        ticketBase.createTicket(1);
         Instantiate(ticketBase.notePrefab,printPostion.position, Quaternion.identity);
         
     }
