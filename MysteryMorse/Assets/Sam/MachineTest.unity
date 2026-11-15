@@ -900,7 +900,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1179712220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1131,7 +1131,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1380252328
 Transform:
   m_ObjectHideFlags: 0
@@ -12110,6 +12110,14 @@ PrefabInstance:
     - target: {fileID: 6344057954692077733, guid: 9ac1578d6ad7d804cbc0f22f31f000f5, type: 3}
       propertyPath: audioSource
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6344057954692077733, guid: 9ac1578d6ad7d804cbc0f22f31f000f5, type: 3}
+      propertyPath: increaseMod
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6344057954692077733, guid: 9ac1578d6ad7d804cbc0f22f31f000f5, type: 3}
+      propertyPath: scrollingFrameWindow
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8232237871029177439, guid: 9ac1578d6ad7d804cbc0f22f31f000f5, type: 3}
       propertyPath: m_Name
