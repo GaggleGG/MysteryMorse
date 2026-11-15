@@ -16,6 +16,10 @@ public class SinkScript : ScrollToPoint
     public ParticleSystem TapWater;
 
 
+    public delegate void SinkWaterRunning(bool isWaterRunning);
+    public static event SinkWaterRunning sinkWaterRunning;
+
+
     public delegate void SinkFullyOnChanged(bool sinkFullyOn);
     public static event SinkFullyOnChanged sinkFullyOn;
     bool sinkOn = false;
@@ -51,11 +55,13 @@ public class SinkScript : ScrollToPoint
         Vector3 tapRotation = Vector3.Lerp(StartTapRotation, EndTapRotation, slideValue/targetValue);
         Tap.transform.localEulerAngles = tapRotation;
 
+        //using the water particle effects to see if we're trying to fire off this event multiple times is a bit cludge lmao
         if(slideValue < waterBreakpoint)
         {
             if(TapWater.isPlaying)
             {
                 TapWater.Stop();
+                sinkWaterRunning?.Invoke(false);
             }
         }
         else
@@ -63,6 +69,7 @@ public class SinkScript : ScrollToPoint
             if(!TapWater.isPlaying)
             {
                 TapWater.Play();
+                sinkWaterRunning?.Invoke(true);
             }
 
         }
