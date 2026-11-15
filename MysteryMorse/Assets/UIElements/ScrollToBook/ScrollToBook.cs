@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
@@ -25,8 +26,14 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     //List of book elements to collect
     public List<Image> bookElements;
 
+    //List of game objects already unlocked
+    private bool[] unlockedElements = new bool[1];
+
     //Current page index
     private int pageIndex = 0;
+
+    //Amount of pages the player currently has
+    private int unlockedPages = 1;
 
     //Bool that determines if the book is being scrolled over
     private bool useScrollBook;
@@ -39,7 +46,7 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     //Book positions
     private Vector2 bookCenter = new Vector2(0, 0);
-    private Vector2 bookOffScreen = new Vector2(0, -1000);
+    private Vector2 bookOffScreen = new Vector2(0, -1100);
 
     //Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start() {
@@ -55,7 +62,7 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     //Update is called once per frame
     void Update() {
-        //Debug.Log(pageIndex);
+        Debug.Log(pageIndex);
 
         //Reads the current mouse and scroll wheel valuesS
         mousePosition = Mouse.current.position.ReadValue();
@@ -70,7 +77,6 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             if (useScrollBook && bookOpen == false) {
                 //Sets the book UI to active
                 setUIActive(book);
-                scrollable = false;
                 //Starts a coroutine to smoothly move the book up
                 StartCoroutine(MoveBook(bookOffScreen, bookCenter, 2));
                 
@@ -78,12 +84,20 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
                 bookOpen = true;
             //If the player is hovering the scroll book and the book is open
             } else if (useScrollBook && bookOpen == true) {
-                scrollable = false;
                 //Starts a coroutine to smoothly move the book down
                 StartCoroutine(MoveBook(bookCenter, bookOffScreen, 2));      
 
                 //Changes the book open state and sets scrollable to false
                 bookOpen = false;
+            //If the player is not hovering the book icon and has the book open, they can flip pages
+            } else if (!useScrollBook && bookOpen == true) {
+                //Flip pages left
+                if (scrollValue.y > 0 && scrollable == true) {
+                    StartCoroutine(FlipToPage(pageIndex - 1));
+                //Flip pages right
+                } else if (!useScrollBook && bookOpen == true) {
+                    StartCoroutine(FlipToPage(pageIndex + 1));
+                }
             }
         }
     }
@@ -91,22 +105,11 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     //Method that is called by notes to activate corresponding elements in the book
     public void CollectNote(int solutionID) {
         setUIActive(bookElements[solutionID]);
-    }
+        unlockedElements[solutionID] = true;
 
-    public void FlipToPage(int pageNumber) {
-        if (pageNumber !< 0 || pageNumber !> 1) {
-            foreach (Image image in bookElements) {
-                setUIInactive(image);
-            }
-
-            switch (pageNumber) {
-                case 0:
-                    setUIActive(bookElements[0]);
-                    setUIActive(bookElements[1]);
-                    break;
-                default:
-                    break;
-            }
+        if (bookOpen == false) {
+            //Starts a coroutine to smoothly move the book up
+            StartCoroutine(MoveBook(bookOffScreen, bookCenter, 2));
         }
     }
 
@@ -134,25 +137,20 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     }
 
     //Reusable methods for setting any UI elements to active, overloaded for different UI element types
-    void setUIActive(TMP_Text UIObject) {
-        UIObject.gameObject.SetActive(true);
-    }
-
     void setUIActive(Image UIObject) {
         UIObject.gameObject.SetActive(true);
     }
 
     //Reusable methods for disabling any UI elements, overloaded for different UI element types
-    void setUIInactive(TMP_Text UIObject) {
-        UIObject.gameObject.SetActive(false);
-    }
-
     void setUIInactive(Image UIObject) {
         UIObject.gameObject.SetActive(false);
     }
 
     //Method that animates the book while it moves position
     IEnumerator MoveBook(Vector2 from, Vector2 to, float speed) {
+        //Ensures the player can't rapidly do the action
+        scrollable = false;
+
         //Interval
         var t = 0f;
 
@@ -171,6 +169,36 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             setUIInactive(book);
         }
 
+        //Resets scrollable when the animation is done
+        scrollable = true;
+    }
+
+    //Function that flips the book the specific page, revealing its elements and hiding the others
+    IEnumerator FlipToPage(int pageNumber) {
+        //Ensures the player cannot rapidly do the action
+        scrollable = false;
+
+        //Changes the page index to the page number, but clamped to a range
+        pageIndex = Mathf.Clamp(pageNumber, 0, unlockedPages);
+
+        //Removes every UI element
+        foreach (Image image in bookElements) {
+            setUIInactive(image);
+        }
+
+        //Switch statement that reveals things on the page based on what is on the page and what the player has unlocked
+        switch (pageIndex) {
+            case 0:
+                if (unlockedElements[0] == true) {
+                    setUIActive(bookElements[0]);
+                }
+                break;
+            default:
+                break;
+        }
+
+        //Delay before setting scrollable back to true so there is still no issue with spamming the action
+        yield return new WaitForSecondsRealtime(0.1f);
         scrollable = true;
     }
 }
