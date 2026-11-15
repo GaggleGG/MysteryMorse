@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
@@ -28,6 +29,8 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     //Current page index
     private int pageIndex = 0;
 
+    private int unlockedPages = 1;
+
     //Bool that determines if the book is being scrolled over
     private bool useScrollBook;
 
@@ -55,7 +58,7 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     //Update is called once per frame
     void Update() {
-        //Debug.Log(pageIndex);
+        Debug.Log(pageIndex);
 
         //Reads the current mouse and scroll wheel valuesS
         mousePosition = Mouse.current.position.ReadValue();
@@ -84,6 +87,12 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
                 //Changes the book open state and sets scrollable to false
                 bookOpen = false;
+            } else if (!useScrollBook && bookOpen == true) {
+                if (scrollValue.y > 0 && scrollable == true) {
+                    FlipToPage(pageIndex - 1);
+                } else if (!useScrollBook && bookOpen == true) {
+                    FlipToPage(pageIndex + 1);
+                }
             }
         }
     }
@@ -94,20 +103,20 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     }
 
     public void FlipToPage(int pageNumber) {
-        if (pageNumber !< 0 || pageNumber !> 1) {
-            foreach (Image image in bookElements) {
-                setUIInactive(image);
-            }
+        pageIndex = Mathf.Clamp(pageNumber, 0, unlockedPages);
 
-            switch (pageNumber) {
-                case 0:
-                    setUIActive(bookElements[0]);
-                    setUIActive(bookElements[1]);
-                    break;
-                default:
-                    break;
-            }
+        foreach (Image image in bookElements) {
+            setUIInactive(image);
         }
+
+        switch (pageIndex) {
+            case 0:
+                setUIActive(bookElements[0]);
+                setUIActive(bookElements[1]);
+                break;
+            default:
+                break;
+            }
     }
 
     //Sets the using book variable to true when the player scrolls over the specific UI element
@@ -134,19 +143,11 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     }
 
     //Reusable methods for setting any UI elements to active, overloaded for different UI element types
-    void setUIActive(TMP_Text UIObject) {
-        UIObject.gameObject.SetActive(true);
-    }
-
     void setUIActive(Image UIObject) {
         UIObject.gameObject.SetActive(true);
     }
 
     //Reusable methods for disabling any UI elements, overloaded for different UI element types
-    void setUIInactive(TMP_Text UIObject) {
-        UIObject.gameObject.SetActive(false);
-    }
-
     void setUIInactive(Image UIObject) {
         UIObject.gameObject.SetActive(false);
     }
