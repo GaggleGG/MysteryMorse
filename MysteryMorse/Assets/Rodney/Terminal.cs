@@ -1,10 +1,14 @@
 using UnityEngine;
 using Mono.Cecil.Cil;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 
 public class Morse 
 {
+
+    
+
     //Morse code Dictionary
    public static Dictionary<char, string> Code = new() {
         ['a'] = ".-",
@@ -88,7 +92,7 @@ public class Morse
     //Solutions for the terminal
    public static Dictionary<string, int> Solutions = new()
     {
-        ["--. --."] = 0
+        ["--. --."] = 2
     };
 
 
@@ -133,24 +137,24 @@ public class Morse
             Debug.Log("<color=green>" + tempInput + " is valid! Solution: " + solution + "</color>");
             // print ticket
             
-            terminal.ticket.CreateTicket(solution);
+            
 
             if (terminal != null)
-        {
-            terminal.ChangeState(Terminal.TerminalState.CreateTicket);
-        }
+            {
+                terminal.PrintTicket(solution);
+                terminal.ChangeState(Terminal.TerminalState.CreateTicket);
+            }
         }
         else
         {
             Debug.Log("<color=red>Input is invalid!</color>");
             //error sound
             if (terminal != null)
-        {
-            terminal.ChangeState(Terminal.TerminalState.WaitingForTicket);
+            {
+                terminal.ChangeState(Terminal.TerminalState.WaitingForTicket);
+            }
         }
-        }
-    }
-
+    }   
 }
 
 
@@ -166,8 +170,15 @@ public class Terminal : MonoBehaviour
 
     [SerializeField]
     public GameObject morseInput;
+
+    [SerializeField]
     public GameObject submitLever;
+
+    [SerializeField]
     public GameObject printer;
+
+    [SerializeField]
+    public GameObject notePrefab;
 
 
     public enum TerminalState
@@ -233,6 +244,7 @@ public class Terminal : MonoBehaviour
         
         if (state == TerminalState.CreateTicket)
         {
+            Debug.Log(ticket);
             printer.GetComponent<PrinterScript>().printTicket(ticket);
         }
     }
@@ -253,4 +265,25 @@ public class Terminal : MonoBehaviour
         string tempInput = currentInput;
         morseRef.ValidateInput(currentInput, this);
     }
+
+    public void PrintTicket(int solutionID)
+{
+    Debug.Log(printer + " and " + notePrefab);
+    if (notePrefab != null && printer != null)
+    {
+        GameObject spawnedTicket = Instantiate(notePrefab, printer.transform.position, printer.transform.rotation);
+        Debug.Log("spawned ticket " + spawnedTicket + " " + solutionID);
+        
+        if (spawnedTicket.TryGetComponent<NotePickup>(out var note))
+        {
+            Debug.Log($"checkout this {note}");
+            note.solutionID = solutionID;
+        }
+    }
+    else
+    {
+        Debug.LogError($"<color=red>Missing reference on '{gameObject.name}'! NotePrefab is {(notePrefab == null ? "NULL" : "OK")}, Printer is {(printer == null ? "NULL" : "OK")}</color>", this);
+    }
+}
+
 }

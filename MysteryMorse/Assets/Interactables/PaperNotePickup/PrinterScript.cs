@@ -35,9 +35,14 @@ public class PrinterScript : MonoBehaviour
 
     public void printTicket(Ticket ticket)
     {
+        if (ticket.notePrefab == null)
+        {
+            Debug.LogError("notePrefab is null! Check that NotePickup is inside a 'Resources' folder.");
+            return;
+        }
 
-        Instantiate(ticket.notePrefab,printPostion.position, Quaternion.identity);
-        
+        Instantiate(ticket.notePrefab, printPostion.position, Quaternion.identity);
+        terminal.ChangeState(Terminal.TerminalState.WaitingForTicket); // <-- Prevents spawning every frame
     }
 
     
