@@ -7,7 +7,7 @@ using System.Linq;
 public class AudioPlayer : MonoBehaviour
 {
     public Sound[] sounds;
-
+    private readonly HashSet<string> loggedPlaying = new HashSet<string>();
 
 
     void Start()
@@ -47,9 +47,24 @@ public class AudioPlayer : MonoBehaviour
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
 
-        Debug.Log(s.name + " is playing");
+        if (s == null || s.source == null)
+        {
+            return false;
+        }
 
-        return s.source.isPlaying;
+        bool playing = s.source.isPlaying;
+
+        if (playing && !loggedPlaying.Contains(name))
+        {
+            Debug.Log($"{name} is playing");
+            loggedPlaying.Add(name);
+        }
+        else if (!playing)
+        {
+            loggedPlaying.Remove(name);
+        }
+
+        return playing;
 
     }
 
