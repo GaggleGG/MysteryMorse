@@ -5,7 +5,8 @@ public class PrinterScript : MonoBehaviour
 
     public Terminal terminal;
     
-    public Transform printPostion;
+    public Vector3 printPostion;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -41,9 +42,8 @@ public class PrinterScript : MonoBehaviour
             return;
         }
 
-        GameObject note = Instantiate(ticket.notePrefab, printPostion.position, printPostion.rotation);
-        note.transform.position = printPostion.position;
-        note.transform.rotation = printPostion.rotation;
+        GameObject note = Instantiate(ticket.notePrefab, transform.position, Quaternion.identity);
+        
         
         terminal.ChangeState(Terminal.TerminalState.WaitingForTicket); // <-- Prevents spawning every frame
     }
