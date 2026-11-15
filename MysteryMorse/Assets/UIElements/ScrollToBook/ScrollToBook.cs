@@ -6,6 +6,10 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
+    //Debug var
+    [SerializeField] public bool uiActive = false;
+    private bool debugUsed = false;
+
     //Hover event
     public delegate void ScrollToBookChanged(bool isHovered);
     public static ScrollToBookChanged scrollToBookChanged;
@@ -75,6 +79,12 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     //Update is called once per frame
     void Update() {
+        //Debug
+        if (uiActive == true && debugUsed == false) {
+            StartCoroutine(UnlockUI());
+            debugUsed = true;
+        }
+
         //Reads the current mouse and scroll wheel valuesS
         mousePosition = Mouse.current.position.ReadValue();
         Vector2 scrollValue = Scroll.ReadValue<Vector2>();

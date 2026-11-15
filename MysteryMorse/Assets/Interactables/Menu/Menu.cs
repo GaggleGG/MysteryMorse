@@ -4,12 +4,16 @@ using UnityEngine.UI;
 
 public class Menu : ScrollToPoint {
     //public GameObject background;
-    [SerializeField]
-    Vector3 menuStart;
-    [SerializeField]
-    Vector3 menuEnd;
+    private Vector3 menuStart;
+    private Vector3 menuEnd;
+
+    Transform menuPos;
 
     public GameObject paper;
+
+    private void Awake() {
+        menuPos = GetComponent<Transform>();
+    }
 
     //Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start() {
@@ -17,6 +21,11 @@ public class Menu : ScrollToPoint {
         if (paper == null) {
             paper = GameObject.Find("Paper");
         }
+
+        //Sets the start pos and end pos based on the object's position
+        menuStart = new Vector3(menuPos.position.x, menuPos.position.y, menuPos.position.z);
+
+        menuEnd = new Vector3(menuPos.position.x, menuPos.position.y + 4.4f, menuPos.position.z);
     }
 
     // Update is called once per frame
