@@ -4,14 +4,12 @@ public class PipeDrip : MonoBehaviour
 {
     
     private AudioSource audioSource;
-    [SerializeField]
-    private AudioClip clip;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        audioSource.clip = clip;
         //Set to loop
         audioSource.loop = true;
         this.enabled = false;
@@ -28,6 +26,7 @@ public class PipeDrip : MonoBehaviour
     {
         if(dripActive)
         {
+            Debug.Log("Sink Turned On");
             audioSource.Play();
         }
         else

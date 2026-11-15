@@ -9991,6 +9991,7 @@ GameObject:
   - component: {fileID: 5557022474686803648}
   - component: {fileID: 997641620354914530}
   - component: {fileID: 2545163447686685103}
+  - component: {fileID: 2665923054282509936}
   m_Layer: 0
   m_Name: Sink
   m_TagString: Untagged
@@ -10014,7 +10015,6 @@ Transform:
   - {fileID: 4760154125785013038}
   - {fileID: 1377333207829556843}
   - {fileID: 1181326829288411537}
-  - {fileID: 8776243800843903448}
   - {fileID: 4402527486557068338}
   - {fileID: 6294725679275517053}
   m_Father: {fileID: 0}
@@ -10032,7 +10032,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SinkScript
   increaseMod: 5
-  waterAudio: {fileID: 7266517478299987860}
+  waterAudio: {fileID: 0}
   Tap: {fileID: 8382630144500241814}
   StartTapRotation: {x: 90, y: -90, z: -90}
   EndTapRotation: {x: -720, y: -90, z: -90}
@@ -10061,52 +10061,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.5, y: 0.3, z: 0.25}
   m_Center: {x: 0, y: 0.7, z: 0}
---- !u!1 &8615953989821472660
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8776243800843903448}
-  - component: {fileID: 7266517478299987860}
-  m_Layer: 0
-  m_Name: Audio Source
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8776243800843903448
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8615953989821472660}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.428, y: 0.778, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5557022474686803648}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &7266517478299987860
+--- !u!82 &2665923054282509936
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8615953989821472660}
+  m_GameObject: {fileID: 6294274362103100712}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: a23607ea2701ed144909f0849875daa0, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 1
   Mute: 0
