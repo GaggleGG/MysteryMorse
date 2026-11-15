@@ -1168,6 +1168,7 @@ MonoBehaviour:
   zipStartLocation: {x: -0.377, y: 0, z: -0.486}
   zipEndLocation: {x: 0.358, y: 0, z: -0.486}
   zipperSlide: {fileID: 555532703}
+  note: {fileID: 0}
 --- !u!65 &1179712221
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12160,6 +12161,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Terminal
   morseInput: {fileID: 1641748794}
   submitLever: {fileID: 0}
+  printer: {fileID: 0}
   currentInput: 
   currentTranslation: 
   state: 1
@@ -12435,6 +12437,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Terminal
   morseInput: {fileID: 1641748794}
   submitLever: {fileID: 959243073}
+  printer: {fileID: 1201363029}
   currentInput: 
   currentTranslation: 
   state: 1

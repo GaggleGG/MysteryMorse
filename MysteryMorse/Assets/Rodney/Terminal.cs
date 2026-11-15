@@ -124,7 +124,10 @@ public class Morse
     public void ValidateInput(string currentInput, Terminal terminal = null)
     {
 
-        string tempInput = currentInput.Replace("?", ""); // Remove invalids from the input for validation
+        Debug.Log(currentInput);
+        string tempInput = currentInput.Replace("?", "").Trim();
+        
+        Debug.Log(tempInput);
         if (Solutions.TryGetValue(tempInput, out int solution))
         {
             Debug.Log("<color=green>" + tempInput + " is valid! Solution: " + solution + "</color>");
@@ -164,6 +167,8 @@ public class Terminal : MonoBehaviour
     [SerializeField]
     public GameObject morseInput;
     public GameObject submitLever;
+    public GameObject printer;
+
 
     public enum TerminalState
     {
@@ -216,12 +221,20 @@ public class Terminal : MonoBehaviour
             currentInput = morseInput.GetComponent<MorseInput>().currentMorseInput;
             currentTranslation = morseRef.TranslateMorse(currentInput);
         }
+
+
+        
     }
 
 
     void FixedUpdate()
     {
         UpdateInput();
+        
+        if (state == TerminalState.CreateTicket)
+        {
+            printer.GetComponent<PrinterScript>().printTicket(ticket);
+        }
     }
 
 
@@ -235,6 +248,7 @@ public class Terminal : MonoBehaviour
     //Grab the SubmitLver script state and call the ValidateInput method when the lever is pulled
     public void ValidateInput()
     {
+        UpdateInput();
         Debug.Log("CHECKYYYY " + currentInput);
         string tempInput = currentInput;
         morseRef.ValidateInput(currentInput, this);
