@@ -120,7 +120,7 @@ public class Lamp : ScrollToPoint
 
         if(!isScrolling)
         {
-            slideValue = Mathf.MoveTowards(slideValue, 0, 500 * Time.deltaTime);
+            slideValue = Mathf.MoveTowards(slideValue, 0, 300 * Time.deltaTime);
             //Debug.Log("slideval: " + slideValue);
         }
 

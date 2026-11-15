@@ -5861,11 +5861,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2205908678748890933, guid: 763d4f6d4b7041c40bebd82326f38db7, type: 3}
       propertyPath: increaseMod
-      value: 12
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 2205908678748890933, guid: 763d4f6d4b7041c40bebd82326f38db7, type: 3}
+      propertyPath: cordEndPos.z
+      value: -0.08916
       objectReference: {fileID: 0}
     - target: {fileID: 2205908678748890933, guid: 763d4f6d4b7041c40bebd82326f38db7, type: 3}
       propertyPath: scrollingFrameWindow
-      value: 10
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 2886134141416120617, guid: 763d4f6d4b7041c40bebd82326f38db7, type: 3}
       propertyPath: m_LocalPosition.x
