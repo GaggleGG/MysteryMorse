@@ -31,7 +31,7 @@ public class SubmitLever : MonoBehaviour, IScrollable
     [Header("Switch Bone Rotation Constraints")]
     [SerializeField] private float maxZRotation = 130f;
     [SerializeField] private float minZRotation = 20f;
-    [SerializeField] private float scrollSensitivity = 5f; // How far each scroll step moves the lever
+    [SerializeField] private float scrollSensitivity = 6f; // How far each scroll step moves the lever
     [SerializeField] private float rotationSpeed = 15f;    // Smoothing speed toward target Z angle
     [SerializeField] private float returnSpeed = 10f;      // Speed for snapping back when idle
     private Quaternion initialLocalRotation;

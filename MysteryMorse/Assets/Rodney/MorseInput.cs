@@ -1,3 +1,5 @@
+using System;
+using TMPro;
 using UnityEngine;
 
 public class MorseInput : ScrollToPoint
@@ -30,6 +32,8 @@ public class MorseInput : ScrollToPoint
 
     float topLockThreshhold = 60;
     float botLockedThreshhold = 40;
+
+    public TextMeshPro Display;
 
     //
 
@@ -110,6 +114,7 @@ public class MorseInput : ScrollToPoint
     void Start()
     {
         ResetAll();
+        UpdateDisplay();
     }
 
     /*
@@ -141,6 +146,7 @@ public class MorseInput : ScrollToPoint
     public void ClearMorseInput()
     {
         currentMorseInput = "";
+        UpdateDisplay();
     }
 
     /*
@@ -171,6 +177,7 @@ public class MorseInput : ScrollToPoint
             //currentScrollDirection = ScrollDirection.Up;
             Debug.Log("<color=green>Positive Scroll Value Recieved: " + frameScrollValue + " Dot</color>");
             currentMorseInput += ".";
+            UpdateDisplay();
             Debug.Log("<color=yellow>Add Dot to Current Morse Input: " + currentMorseInput + "</color>");
             //isScrolling = false;   
            //audioSource.PlayOneShot(dotSound);
@@ -183,10 +190,21 @@ public class MorseInput : ScrollToPoint
             //currentScrollDirection = ScrollDirection.Down;
             Debug.Log("<color=red>Negative Scroll Value Recieved: " + frameScrollValue + " Dash</color>");
             currentMorseInput += "-";
+            UpdateDisplay();
             Debug.Log("<color=red>Add Dash to Current Morse Input: " + currentMorseInput + "</color>");
             //isScrolling = false;
             //audioSource.PlayOneShot(dashSound);
             audioPlayer.Play("Dash");
+        }
+    }
+
+    void UpdateDisplay()
+    {
+        Display.text = currentMorseInput.Replace(".","•");
+        //do not display more than 5 chars
+        if(Display.text.Length >= 5)
+        {
+            Display.text = Display.text.Substring(0,5);
         }
     }
 

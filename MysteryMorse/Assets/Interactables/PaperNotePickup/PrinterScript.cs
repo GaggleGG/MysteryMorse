@@ -41,7 +41,10 @@ public class PrinterScript : MonoBehaviour
             return;
         }
 
-        Instantiate(ticket.notePrefab, printPostion.position, Quaternion.identity);
+        GameObject note = Instantiate(ticket.notePrefab, printPostion.position, printPostion.rotation);
+        note.transform.position = printPostion.position;
+        note.transform.rotation = printPostion.rotation;
+        
         terminal.ChangeState(Terminal.TerminalState.WaitingForTicket); // <-- Prevents spawning every frame
     }
 
