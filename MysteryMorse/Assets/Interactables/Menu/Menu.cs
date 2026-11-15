@@ -25,7 +25,7 @@ public class Menu : ScrollToPoint {
         //Sets the start pos and end pos based on the object's position
         menuStart = new Vector3(menuPos.position.x, menuPos.position.y, menuPos.position.z);
 
-        menuEnd = new Vector3(menuPos.position.x, menuPos.position.y + 4.4f, menuPos.position.z);
+        menuEnd = new Vector3(menuPos.position.x, menuPos.position.y + 4.3f, menuPos.position.z);
     }
 
     // Update is called once per frame
