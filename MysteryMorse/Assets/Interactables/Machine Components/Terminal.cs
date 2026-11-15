@@ -276,7 +276,7 @@ public class Terminal : MonoBehaviour
     Debug.Log(printer + " and " + notePrefab);
     if (notePrefab != null && printer != null)
     {
-        GameObject spawnedTicket = Instantiate(notePrefab, printer.transform.position, Quaternion.identity);
+        GameObject spawnedTicket = Instantiate(notePrefab, printer.transform.position, printer.transform.rotation);
         // spawnedTicket.GetComponent<Transform>().SetPositionAndRotation(new Vector3(-1.12f,1.2f,-4.18f),Quaternion.identity);
         Debug.Log("spawned ticket " + spawnedTicket + " " + solutionID);
         
