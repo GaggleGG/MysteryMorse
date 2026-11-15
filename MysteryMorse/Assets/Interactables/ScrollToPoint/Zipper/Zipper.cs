@@ -6,6 +6,11 @@ public class Zipper : ScrollToPoint
     Vector3 zipStartLocation;
     [SerializeField]
     Vector3 zipEndLocation;
+    [SerializeField]
+    GameObject jackedClosedMesh;
+    [SerializeField]
+    GameObject jacketOpenMesh;
+
 
     public GameObject zipperSlide;
     public GameObject Tag;
@@ -14,7 +19,8 @@ public class Zipper : ScrollToPoint
     void Start()
     {
         Tag.SetActive(false);
-
+        jacketOpenMesh.SetActive(false);
+        jackedClosedMesh.SetActive(true);
         zipperSlide.transform.localPosition = zipStartLocation;
         slideValue = 0;
     }
@@ -48,6 +54,8 @@ public class Zipper : ScrollToPoint
         unZipped = true;
 
         //set jacket model to unzipped
+        jacketOpenMesh.SetActive(true);
+        jackedClosedMesh.SetActive(false);
 
         //reveal tag
         Tag.SetActive(true);
