@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class Morse 
 {
     //Morse code Dictionary
-    static Dictionary<char, string> Code = new() {
+   public static Dictionary<char, string> Code = new() {
         ['a'] = ".-",
         ['b'] = "-...",
         ['c'] = "-.-.",
@@ -45,7 +45,7 @@ public class Morse
         ['9'] = "----."
     };
 
-    static Dictionary<string, char> Translation = new() {
+   public static Dictionary<string, char> Translation = new() {
         [".-"] = 'a',
         ["-..."] = 'b',
         ["-.-."] = 'c',
@@ -86,7 +86,7 @@ public class Morse
 
 
     //Solutions for the terminal
-    static Dictionary<string, int> Solutions = new()
+   public static Dictionary<string, int> Solutions = new()
     {
         ["--. --."] = 0
     };
@@ -121,6 +121,23 @@ public class Morse
         return translatedText.Trim();
     }
 
+    public void ValidateInput(string currentInput)
+    {
+
+        string tempInput = currentInput.Replace("?", ""); // Remove invalids from the input for validation
+        if (Solutions.TryGetValue(tempInput, out int solution))
+        {
+            Debug.Log("<color=green>" + tempInput + " is valid! Solution: " + solution + "</color>");
+            // print ticket
+
+        }
+        else
+        {
+            Debug.Log("<color=red>Input is invalid!</color>");
+            //error sound
+        }
+    }
+
 }
 
 
@@ -136,10 +153,14 @@ public class Terminal : MonoBehaviour
 
     [SerializeField]
     public GameObject morseInput;
+    public GameObject submitLever;
+
     public Morse morseRef = new Morse();
 
     public string currentInput = "";
     public string currentTranslation = "";
+
+    
 
    
 
@@ -151,6 +172,7 @@ public class Terminal : MonoBehaviour
 
     public void ClearInput()
     {
+        morseInput.GetComponent<MorseInput>().ClearMorseInput();
         currentInput = "";
         currentTranslation = "";
     }
@@ -186,4 +208,10 @@ public class Terminal : MonoBehaviour
     }
 
 
+    //Grab the SubmitLver script state and call the ValidateInput method when the lever is pulled
+    public void ValidateInput()
+    {
+        string tempInput = currentInput;
+        morseRef.ValidateInput(tempInput);
+    }
 }

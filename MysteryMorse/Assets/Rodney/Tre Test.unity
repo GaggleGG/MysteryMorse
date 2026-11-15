@@ -806,6 +806,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3a5152c97d4987e49a527527c2c137c9, type: 3}
       insertIndex: -1
       addedObject: {fileID: 959243075}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3a5152c97d4987e49a527527c2c137c9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 959243078}
   m_SourcePrefab: {fileID: 100100000, guid: 3a5152c97d4987e49a527527c2c137c9, type: 3}
 --- !u!1 &959243073 stripped
 GameObject:
@@ -829,19 +832,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90ec1315f9ceba144a2ced586303308a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SubmitLever
-  SwitchBone: {fileID: 959243074}
-  dotSound: {fileID: 0}
-  dashSound: {fileID: 0}
+  LeverBone: {fileID: 959243074}
+  terminalRef: {fileID: 2075764519}
   ClickSound: {fileID: 0}
   audioSource: {fileID: 0}
-  currentMorseInput: 
+  currentState: 1
   maxZRotation: 130
   minZRotation: 20
+  scrollSensitivity: 5
   rotationSpeed: 100
+  returnSpeed: 10
   delayForSpace: 3
   delaySeconds: 0.5
+  returnDelay: 0.25
+  scrollingFrameWindow: 4
   timer: 0
   isScrolling: 0
+--- !u!65 &959243078
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 959243073}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.095493, y: 6.482669, z: 3.8444667}
+  m_Center: {x: 0.5477467, y: 1.2209222, z: -0.027129132}
 --- !u!1 &1151734473
 GameObject:
   m_ObjectHideFlags: 0
@@ -1235,6 +1262,75 @@ Transform:
   - {fileID: 555532707}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 51.74, z: 0}
+--- !u!1001 &1201363028
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 6c2e8fbea5f6c214abbe5cf3e50a01a0, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 20.451
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6c2e8fbea5f6c214abbe5cf3e50a01a0, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 20.451
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6c2e8fbea5f6c214abbe5cf3e50a01a0, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 20.451
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6c2e8fbea5f6c214abbe5cf3e50a01a0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.12
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6c2e8fbea5f6c214abbe5cf3e50a01a0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6c2e8fbea5f6c214abbe5cf3e50a01a0, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -4.18
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6c2e8fbea5f6c214abbe5cf3e50a01a0, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.3339693
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6c2e8fbea5f6c214abbe5cf3e50a01a0, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.33396935
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6c2e8fbea5f6c214abbe5cf3e50a01a0, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.6232692
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6c2e8fbea5f6c214abbe5cf3e50a01a0, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.6232692
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6c2e8fbea5f6c214abbe5cf3e50a01a0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6c2e8fbea5f6c214abbe5cf3e50a01a0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6c2e8fbea5f6c214abbe5cf3e50a01a0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 236.368
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6c2e8fbea5f6c214abbe5cf3e50a01a0, type: 3}
+      propertyPath: m_Name
+      value: ticketprinter
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6c2e8fbea5f6c214abbe5cf3e50a01a0, type: 3}
 --- !u!1 &1380252327
 GameObject:
   m_ObjectHideFlags: 0
@@ -6695,6 +6791,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -1091316381927643404, guid: 920171d1e21120b4ab9044e49bccaf0f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.0002499934
+      objectReference: {fileID: 0}
+    - target: {fileID: -1091316381927643404, guid: 920171d1e21120b4ab9044e49bccaf0f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.00004999757
+      objectReference: {fileID: 0}
+    - target: {fileID: -1091316381927643404, guid: 920171d1e21120b4ab9044e49bccaf0f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.0000000017607817
+      objectReference: {fileID: 0}
+    - target: {fileID: -1091316381927643404, guid: 920171d1e21120b4ab9044e49bccaf0f, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.7071068
       objectReference: {fileID: 0}
@@ -12024,6 +12132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Terminal
   morseInput: {fileID: 1641748794}
+  submitLever: {fileID: 0}
   currentInput: 
   currentTranslation: 
 --- !u!65 &2075764520
@@ -12222,3 +12331,4 @@ SceneRoots:
   - {fileID: 2075764523}
   - {fileID: 1641748793}
   - {fileID: 959243072}
+  - {fileID: 1201363028}

@@ -6,53 +6,50 @@ public class SubmitLever : MonoBehaviour, IScrollable
 
     [Header("Input Switch Bone")]
     [SerializeField]
-    private GameObject SwitchBone;
-    
+    private GameObject LeverBone;
+
+    [Header("Terminal Reference")]
+    [SerializeField]
+    private Terminal terminalRef;
+
     [Header("Sound Effects")]
-    [SerializeField]
-    public AudioClip dotSound;
-    [SerializeField]
-    public AudioClip dashSound;
-    [SerializeField]
-    public AudioClip ClickSound;
-    [SerializeField]
-    public AudioSource audioSource;
+    [SerializeField] public AudioClip ClickSound;
+    [SerializeField] public AudioSource audioSource;
 
-     [Header("Rotation Limits")]
-    [SerializeField] private float minXRotation = -45f;
-    [SerializeField] private float maxXRotation = 129f;
-    [SerializeField] private float returnSpeed = 10f; // Speed for snapping back to 0
-    [SerializeField] private float dragSensitivity = 0.5f;
+    public enum LeverState
+    {
+        isPulled,
+        isNotPulled
+    }
+    public LeverState currentState = LeverState.isNotPulled;
 
-     // Store starting local rotation angles
-    private float initialYAngle;
-    private float initialZAngle;
-    private float currentXAngle = 0f;   
-
-    //switch bone rotation constraints
     [Header("Switch Bone Rotation Constraints")]
-    [SerializeField]
-    private float maxZRotation = 130f;
-    [SerializeField]
-    private float minZRotation = 20f;
-    
-    [SerializeField]
-    private float rotationSpeed = 100f;
+    [SerializeField] private float maxZRotation = 130f;
+    [SerializeField] private float minZRotation = 20f;
+    [SerializeField] private float scrollSensitivity = 5f; // How far each scroll step moves the lever
+    [SerializeField] private float rotationSpeed = 15f;    // Smoothing speed toward target Z angle
+    [SerializeField] private float returnSpeed = 10f;      // Speed for snapping back when idle
 
-    [Header("No Scroll Input Timer")]
-    [SerializeField]
-    public float delayForSpace = 3f;
-
-    [Header("Scroll Delay Timer")]
-    [SerializeField]
-    public float delaySeconds = 0.5f;
+    [Header("Scroll & Cooldown Timers")]
+    [SerializeField] public float delayForSpace = 3f;
+    [SerializeField] public float delaySeconds = 0.5f;   // Cooldown to prevent submit spam
+    [SerializeField] private float returnDelay = 0.25f;    // Wait time after scrolling stops before snapping back
+    [SerializeField] private int scrollingFrameWindow = 4;
 
     [Header("Current Time Display")]
     public float timer = 0f;
-    
-    //This bool is used to determine if the player is currently scrolling or not.
     public bool isScrolling = false;
-    
+
+    private float initialXAngle;
+    private float initialYAngle;
+    private float currentZAngle;
+    private float targetZAngle;
+
+    private int scrollFrameTimer = 0;
+    private float timeSinceLastScroll = 0f;
+    private float submitCooldownTimer = 0f;
+
+
     public float NormalizeAngle(float angle)
     {
         while (angle > 180f) angle -= 360f;
@@ -65,18 +62,120 @@ public class SubmitLever : MonoBehaviour, IScrollable
         //store base rot to restrict rot
         Vector3 initialEuler = transform.localEulerAngles;
         initialYAngle = initialEuler.y;
-        initialZAngle = initialEuler.z;
+        initialXAngle = initialEuler.x;
         
-        // Normalize starting X angle into -180 to 180 space
-        currentXAngle = NormalizeAngle(initialEuler.x);
+        currentZAngle = minZRotation;
+        targetZAngle = minZRotation;
+        ApplyZRotation(currentZAngle);
+    }
+
+   void Update()
+   {
+        if (submitCooldownTimer > 0f)
+        {
+            submitCooldownTimer -= Time.deltaTime;
+        }
+
+        if (!isScrolling)
+        {
+            timeSinceLastScroll += Time.deltaTime;
+
+            // Once enough time passes without scroll input, lerp target back to minZRotation
+            if (timeSinceLastScroll >= returnDelay)
+            {
+                targetZAngle = Mathf.Lerp(targetZAngle, minZRotation, Time.deltaTime * returnSpeed);
+                if (Mathf.Abs(targetZAngle - minZRotation) < 0.05f)
+                {
+                    targetZAngle = minZRotation;
+                    currentState = LeverState.isNotPulled;
+                }
+            }
+        }
+
+        // Smoothly interpolate current Z angle toward target Z angle
+        if (!Mathf.Approximately(currentZAngle, targetZAngle))
+        {
+            currentZAngle = Mathf.Lerp(currentZAngle, targetZAngle, Time.deltaTime * rotationSpeed);
+
+            if (Mathf.Abs(currentZAngle - targetZAngle) < 0.05f)
+            {
+                currentZAngle = targetZAngle;
+            }
+
+            ApplyZRotation(currentZAngle);
+        }
+
+        CheckSubmitThreshold();
+    }
+
+
+
+    //when the player scrolls over the lever, check if they are scrolling up or down and move the lever accordingly. If the lever is pulled all the way down, it will trigger the submit action.
+    // maintain a timer to prevent the player from spamming the lever and submitting multiple times in a row. 
+    // The lever will also Lerp back to its original position after a certain amount of time has passed without any input.
+    void FixedUpdate()
+    {
+        if (isScrolling)
+        {
+            scrollFrameTimer++;
+            if (scrollFrameTimer >= scrollingFrameWindow)
+            {
+                isScrolling = false;
+                scrollFrameTimer = 0;
+            }
+        }
     }
 
     
 
-
     public void WasScrolled(float frameScrollValue)
     {
         //if you want to double chekc nly output when not 0  
-        Debug.Log("<color=yellow>Submit Lever Scrolled: " + frameScrollValue + "</color>");
+       if (Mathf.Approximately(frameScrollValue, 0f)) return;
+
+        isScrolling = true;
+        scrollFrameTimer = 0;
+        timeSinceLastScroll = 0f;
+
+        // Adjust target Z angle by scroll delta (flip -= to += if scroll direction feels inverted)
+        targetZAngle -= frameScrollValue * scrollSensitivity;
+        targetZAngle = Mathf.Clamp(targetZAngle, minZRotation, maxZRotation);
+    }
+
+    private void CheckSubmitThreshold()
+    {
+        // Trigger submit when pulled nearly all the way to maxZRotation and cooldown is ready
+        if (currentState == LeverState.isNotPulled &&
+            currentZAngle >= maxZRotation - 1f &&
+            submitCooldownTimer <= 0f)
+        {
+            currentState = LeverState.isPulled;
+            submitCooldownTimer = delaySeconds;
+            TriggerSubmit();
+        }
+    }
+
+    private void TriggerSubmit()
+    {
+       
+        Debug.Log("<color=green>Submit Lever Pulled!</color>");
+        if (terminalRef != null)
+        {
+            terminalRef.ValidateInput();
+            terminalRef.UpdateInput();
+            terminalRef.DisplayTranslation();
+            terminalRef.ClearInput();
+        }
+        else
+        {
+            Debug.LogError("<color=red>No Terminal Reference Assigned!</color>");
+        }
+
+        
+    }
+    private void ApplyZRotation(float zAngle)
+    {
+        Transform targetTransform = LeverBone != null ? LeverBone.transform : transform;
+        targetTransform.localRotation = Quaternion.Euler(initialXAngle, initialYAngle, zAngle);
     }
 }
