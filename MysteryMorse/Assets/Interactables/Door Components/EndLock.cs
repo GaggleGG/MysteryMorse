@@ -10,7 +10,13 @@ public class EndLock : MonoBehaviour
     //gameobject array
     public GameObject lockPrefab;
     public float spacing = .0010f;
-    //combinations
+    float minY = -0.05f;
+    float maxY = 0.05f;
+
+
+    public float scale = .01f;
+    float totalSpacing;
+    float startY;
 
 
     public int numInput = 5;
@@ -31,6 +37,8 @@ public class EndLock : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        
+
         status = new bool[numInput];
         if (combos.Count==0)
         {
@@ -50,57 +58,42 @@ public class EndLock : MonoBehaviour
         if (lockPrefab == null)
         return;
 
-        Renderer parentRenderer = GetComponent<Renderer>();
-        Renderer prefabRenderer = lockPrefab.GetComponent<Renderer>();
+        totalSpacing = (numInput - 1) * spacing;
 
-        float parentWidth = parentRenderer != null ? parentRenderer.bounds.size.x : 0f;
-        float prefabWidth = prefabRenderer != null ? prefabRenderer.bounds.size.x : 1f;
-
-        float totalRequiredWidth = (prefabWidth * numInput) + (spacing * (numInput - 1));
-        float startX = 0f;
-
-        if (parentWidth > 0f)
-        {
-            startX = -((totalRequiredWidth - prefabWidth) / 2f);
-        }
-
+        startY = minY;
         
 
         for (int i = 0; i < numInput; i++)
         {
-            // Vector3 spawnPosition = transform.position + new Vector3(i * spacing, 0f, 0f);
-            GameObject lockInstance = Instantiate(lockPrefab, transform);
-            lockInstance.name = "LockNum_" + (i + 1);
-            float xPos = startX + (i * (prefabWidth + spacing));
-            lockInstance.transform.localPosition = new Vector3(xPos, 0f, .05f);
+           float yPos = startY + (i * spacing);
+            Vector3 spawnPos = transform.position + new Vector3(.01f, yPos, 0f);
 
+            // Vector3 spawnPosition = transform.position + new Vector3(i * spacing, 0f, 0f);
+            // GameObject lockInstance = Instantiate(lockPrefab, spawnPos, Quaternion.Euler(90f, -90f, -90f), transform);
+            // lockInstance.transform.localScale = new Vector3(scale,scale,scale);
+            // lockInstance.transform.localRotation = Quaternion.Euler(0f, -90f, -90f);
+
+            GameObject lockInstance = Instantiate(lockPrefab, transform);
+            lockInstance.transform.localPosition = new Vector3(0f, yPos, 0f);
+            lockInstance.transform.localRotation = Quaternion.Euler(0f, -90f, 0f);
+            lockInstance.transform.localScale = Vector3.one * 0.01f;
+
+            
+            
+            lockInstance.name = "LockNum_" + (i + 1);
+            
             LockCombo combo = lockInstance.GetComponent<LockCombo>();
             if (combo != null)
             {
                 combo.lockItem = this;
             }
-            Debug.Log($"<color=yellow>Created new {lockInstance} at {xPos}</color>");
+            Debug.Log($"<color=yellow>Created new {lockInstance} at {yPos}</color>");
             locks.Add(lockInstance);
         }
     }
 
     public bool CheckLock(GameObject lockobj, int index)
     {
-        // if (lockobj.GetComponent<LockCombo>().currentNum == combos[index])
-        // {
-        //     Debug.Log("<color=green>Correct Lock</color>");
-        //     bool isUnlocked = true;
-        //     if (isUnlocked)
-        //     {
-        //         status[index] = lockobj.GetComponent<LockCombo>().currentNum == combos[index];
-        //         return true;
-        //     }
-        //     return true;
-        // }
-        // else
-        // {
-        //     return false;  
-        // }
         
         if (index < 0 || index >= combos.Count || index >= locks.Count)
         {
@@ -151,79 +144,6 @@ public class EndLock : MonoBehaviour
     }
 
 
-    // Update is called once per frame
-    void Update()
-    {
-        // if (locks[0].GetComponent<LockCombo>().currentNum == combos[0])
-        // {
-        //     Debug.Log("Lock1 correct");
-        //     lock1 = true;
-        //     if (lock1SFX)
-        //     {
-        //         audioSource.PlayOneShot(clickSFX);
-        //         lock1SFX = false;
-        //     }
-        // }
-        // else
-        // {
-        //     lock1 = false;
-        //     lock1SFX = true;
-        // }
-        
-        // if (locks[1].GetComponent<LockCombo>().currentNum == combos[1])
-        // {
-
-        //     Debug.Log("Lock2 correct");
-        //     lock2 = true;
-        //     if (lock2SFX)
-        //     {
-        //         audioSource.PlayOneShot(clickSFX);
-        //         lock2SFX = false;
-        //     }
-        // }
-        // else
-        // {
-        //     lock2 = false;
-        //     lock2SFX = true;
-        // }
-        // if (locks[2].GetComponent<LockCombo>().currentNum == combos[2])
-        // {
-        //     lock3 = true;
-        //     Debug.Log("Lock3 correct");
-        //     if (lock3SFX)
-        //     {
-        //         audioSource.PlayOneShot(clickSFX);
-        //         lock3SFX = false;
-        //     }
-        // }
-        // else
-        // {
-        //     lock3 = false;
-        //     lock3SFX = true;
-        // }
-        // if (locks[3].GetComponent<LockCombo>().currentNum == combos[3])
-        // {
-        //     lock4 = true;
-        //     Debug.Log("Lock4 correct");
-        //     if (lock4SFX)
-        //     {
-        //         audioSource.PlayOneShot(clickSFX);
-        //         lock4SFX = false;
-        //     }
-        // }
-        // else
-        // {
-        //     lock4 = false;
-        //     lock4SFX = true;
-        // }
-        // if (lock1 && lock2 && lock3 && lock4)
-        // {
-        //     Debug.Log("all locks correct");
-        // }
-    
-        
-    
-    }
 
     
     private void SoundCheck(bool lockCheck)
