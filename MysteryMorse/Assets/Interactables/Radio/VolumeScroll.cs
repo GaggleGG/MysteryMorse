@@ -7,7 +7,7 @@ public class VolumeScroll : CircularScroll
 
     private void Start()
     {
-        
+        slideValue = 50;
     }
 
     private void Update()
@@ -20,7 +20,8 @@ public class VolumeScroll : CircularScroll
         base.WasScrolled(frameScrollValue);
         foreach (Sound s in radioAudio.sounds)
         {
-            s.volume = slideValue;
+            s.source.volume = slideValue/100;
         }
+        Debug.Log("Volume slide value" + slideValue);
     }
 }

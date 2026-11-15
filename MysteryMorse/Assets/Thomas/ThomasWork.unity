@@ -156,10 +156,6 @@ PrefabInstance:
       value: 101.4
       objectReference: {fileID: 0}
     - target: {fileID: 5114768124673042931, guid: 1d61a7589ab5149bb86dbaefe4a1060b, type: 3}
-      propertyPath: rotationAxis.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5114768124673042931, guid: 1d61a7589ab5149bb86dbaefe4a1060b, type: 3}
       propertyPath: rotationAxis.y
       value: 1
       objectReference: {fileID: 0}
