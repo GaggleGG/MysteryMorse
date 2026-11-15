@@ -139,7 +139,7 @@ public class EndLock : MonoBehaviour
         if (allCorrect && locks.Count > 0)
         {
             Debug.Log($"<color=purple>{allCorrect} is true!</color>");
-            gameWon = true;
+            Application.Quit();
         }
     }
 
