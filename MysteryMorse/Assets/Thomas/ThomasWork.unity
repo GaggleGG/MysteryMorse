@@ -2119,24 +2119,12 @@ PrefabInstance:
       value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 3496856653233181089, guid: 5bea36462c283294e926ef32bc2aac65, type: 3}
-      propertyPath: pos0x
-      value: 0.372
-      objectReference: {fileID: 0}
-    - target: {fileID: 3496856653233181089, guid: 5bea36462c283294e926ef32bc2aac65, type: 3}
-      propertyPath: pos9x
-      value: -0.55
-      objectReference: {fileID: 0}
-    - target: {fileID: 3496856653233181089, guid: 5bea36462c283294e926ef32bc2aac65, type: 3}
       propertyPath: maxNum
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3496856653233181089, guid: 5bea36462c283294e926ef32bc2aac65, type: 3}
       propertyPath: currentNum
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3496856653233181089, guid: 5bea36462c283294e926ef32bc2aac65, type: 3}
-      propertyPath: speedRestrict
-      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 3496856653233181089, guid: 5bea36462c283294e926ef32bc2aac65, type: 3}
       propertyPath: sprites.Array.size
@@ -2255,24 +2243,12 @@ PrefabInstance:
       value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 5145937681266203868, guid: 5bea36462c283294e926ef32bc2aac65, type: 3}
-      propertyPath: pos0x
-      value: 0.372
-      objectReference: {fileID: 0}
-    - target: {fileID: 5145937681266203868, guid: 5bea36462c283294e926ef32bc2aac65, type: 3}
-      propertyPath: pos9x
-      value: -0.55
-      objectReference: {fileID: 0}
-    - target: {fileID: 5145937681266203868, guid: 5bea36462c283294e926ef32bc2aac65, type: 3}
       propertyPath: maxNum
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5145937681266203868, guid: 5bea36462c283294e926ef32bc2aac65, type: 3}
       propertyPath: currentNum
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5145937681266203868, guid: 5bea36462c283294e926ef32bc2aac65, type: 3}
-      propertyPath: speedRestrict
-      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 5145937681266203868, guid: 5bea36462c283294e926ef32bc2aac65, type: 3}
       propertyPath: sprites.Array.size
@@ -2335,24 +2311,12 @@ PrefabInstance:
       value: 0.08378997
       objectReference: {fileID: 0}
     - target: {fileID: 6451247360177042428, guid: 5bea36462c283294e926ef32bc2aac65, type: 3}
-      propertyPath: pos0x
-      value: 0.372
-      objectReference: {fileID: 0}
-    - target: {fileID: 6451247360177042428, guid: 5bea36462c283294e926ef32bc2aac65, type: 3}
-      propertyPath: pos9x
-      value: -0.55
-      objectReference: {fileID: 0}
-    - target: {fileID: 6451247360177042428, guid: 5bea36462c283294e926ef32bc2aac65, type: 3}
       propertyPath: maxNum
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6451247360177042428, guid: 5bea36462c283294e926ef32bc2aac65, type: 3}
       propertyPath: currentNum
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6451247360177042428, guid: 5bea36462c283294e926ef32bc2aac65, type: 3}
-      propertyPath: speedRestrict
-      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 6451247360177042428, guid: 5bea36462c283294e926ef32bc2aac65, type: 3}
       propertyPath: sprites.Array.size
@@ -2379,24 +2343,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 81bab86e29d33ba4094c7b21eca6435f, type: 3}
     - target: {fileID: 7159263326459748298, guid: 5bea36462c283294e926ef32bc2aac65, type: 3}
-      propertyPath: pos0x
-      value: 0.372
-      objectReference: {fileID: 0}
-    - target: {fileID: 7159263326459748298, guid: 5bea36462c283294e926ef32bc2aac65, type: 3}
-      propertyPath: pos9x
-      value: -0.55
-      objectReference: {fileID: 0}
-    - target: {fileID: 7159263326459748298, guid: 5bea36462c283294e926ef32bc2aac65, type: 3}
       propertyPath: maxNum
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7159263326459748298, guid: 5bea36462c283294e926ef32bc2aac65, type: 3}
       propertyPath: currentNum
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7159263326459748298, guid: 5bea36462c283294e926ef32bc2aac65, type: 3}
-      propertyPath: speedRestrict
-      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 7159263326459748298, guid: 5bea36462c283294e926ef32bc2aac65, type: 3}
       propertyPath: sprites.Array.size
