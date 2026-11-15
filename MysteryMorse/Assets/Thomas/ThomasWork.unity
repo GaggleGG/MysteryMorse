@@ -119,27 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &40345670 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5675632931852414513, guid: 1d61a7589ab5149bb86dbaefe4a1060b, type: 3}
-  m_PrefabInstance: {fileID: 72916543}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &40345675
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 40345670}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 402d1c91e4516ee4fb19c15c8dc14a6f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::VolumeScroll
-  increaseMod: 5
-  startAngle: 0
-  rotationAxis: {x: 1, y: 0, z: 0}
-  radioAudio: {fileID: 1536979169}
 --- !u!1001 &72916543
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -232,9 +211,6 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5675632931852414513, guid: 1d61a7589ab5149bb86dbaefe4a1060b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 40345675}
     - targetCorrespondingSourceObject: {fileID: 748641645717603333, guid: 1d61a7589ab5149bb86dbaefe4a1060b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 0}
