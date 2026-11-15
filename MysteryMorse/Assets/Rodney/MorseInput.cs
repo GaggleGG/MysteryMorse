@@ -35,14 +35,12 @@ public class MorseInput : MonoBehaviour, IScrollable
 
     //switch bone rotation constraints
     [Header("Switch Bone Rotation Constraints")]
-    [SerializeField]
-    private float maxZRotation = 115f;
-    [SerializeField]
-    private float minZRotation = 60f;
-    [SerializeField]
+    [SerializeField] private float restingZRotation = 90f;
+    [SerializeField] private float maxZRotation = 115f;
+    [SerializeField] private float minZRotation = 60f;
+    [SerializeField] private float rotationSpeed = 15f; // Adjusted for smooth Lerp
     private float currentZRotation = 90f;
-    [SerializeField]
-    private float rotationSpeed = 100f;
+    private float targetZRotation = 90f;
 
      // Store starting local rotation angles
     private float initialYAngle;
@@ -51,33 +49,33 @@ public class MorseInput : MonoBehaviour, IScrollable
 
     [Header("No Scroll Input Timer")]
     [SerializeField]
-    public float delayForSpace = 3f;
+    public float delayForSpace = 1.5f;
 
     [Header("Scroll Delay Timer")]
     [SerializeField]
-    public float delaySeconds = 0.5f;
+    public float delaySeconds = 0.25f;
 
     [Header("Current Time Display")]
     public float timer = 0f;
+    private float inputCooldownTimer = 0f;
+    private float idleTimer = 0f;
     
     //This bool is used to determine if the player is currently scrolling or not.
     public bool isScrolling = false;
+    private bool canAddSpace = false;
 
 
     public void AnimateSwitchBone(float frameScrollValue)
     {
-        if (frameScrollValue > 0)
+        if (frameScrollValue < 0)
         {
             LerpSwitchBoneRotation(maxZRotation);
         }
-        else if (frameScrollValue < 0)
+        else if (frameScrollValue > 0)
         {
             LerpSwitchBoneRotation(minZRotation);
         }
-        else
-        {
-            LerpSwitchBoneRotation(currentZRotation);
-        }
+        
     }
 
     public void LerpSwitchBoneRotation(float targetZRotation)
@@ -86,30 +84,6 @@ public class MorseInput : MonoBehaviour, IScrollable
         SwitchBone.transform.localEulerAngles = new Vector3(SwitchBone.transform.localEulerAngles.x, SwitchBone.transform.localEulerAngles.y, currentZRotation);
     }
 
-    
-    public void UpdateMorseString(float frameScrollValue)
-    {
-         switch (currentScrollDirection)
-        {
-            case ScrollDirection.Up:
-                currentMorseInput += ".";
-                Debug.Log("<color=yellow>Add Dot to Current Morse Input: " + currentMorseInput + "</color>");
-                break;
-            case ScrollDirection.Down:
-                currentMorseInput += "-";
-                Debug.Log("<color=red>Add Dash to Current Morse Input: " + currentMorseInput + "</color>");
-                break;
-            case ScrollDirection.None:
-                if (timer >= delayForSpace && previousScrollDirection != ScrollDirection.None)
-                {
-                    Debug.Log("<color=blue>Add Space to Current Morse Input: " + currentMorseInput + "</color>");
-                    currentMorseInput += " ";
-                }
-                break;
-            default:
-                break;
-        }
-    }
 
     void Start()
     {
@@ -140,10 +114,14 @@ public class MorseInput : MonoBehaviour, IScrollable
         ResetBoneRotation();
     }
 
+    public void ClearMorseInput()
+    {
+        currentMorseInput = "";
+    }
 
     public void CheckForSpace(float frameScrollValue)
     {
-        if (frameScrollValue == 0 && timer >= delayForSpace && previousScrollDirection != ScrollDirection.None && currentScrollDirection != ScrollDirection.None)
+        if (frameScrollValue == 0 && timer >= delayForSpace && previousScrollDirection != ScrollDirection.None && currentScrollDirection != ScrollDirection.None && currentMorseInput.Length > 0)
         {
             previousScrollDirection = currentScrollDirection;
             currentScrollDirection = ScrollDirection.None;
@@ -152,7 +130,9 @@ public class MorseInput : MonoBehaviour, IScrollable
             
             Debug.Log("<color=blue>Add Space to Current Morse Input: " + currentMorseInput + "</color>");
             currentMorseInput += " ";
-            isScrolling = false;   
+            isScrolling = false;  
+            ResetBoneRotation();
+
         }
     }
 
@@ -192,14 +172,18 @@ public class MorseInput : MonoBehaviour, IScrollable
         else
         {
             timer += Time.fixedDeltaTime;
+            idleTimer += Time.fixedDeltaTime;
         } 
+        
     }
 
 
     public void WasScrolled(float frameScrollValue)
     {
-        //if you want to double chekc nly output when not 0  
+        //if you want to double chekc nly output when not 0
+        AnimateSwitchBone(frameScrollValue);  
         CheckForDotOrDash(frameScrollValue);
         CheckForSpace(frameScrollValue);
+        
     }
 }

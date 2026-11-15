@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class Morse 
 {
     //Morse code Dictionary
-    static Dictionary<char, string> Code = new() {
+   public static Dictionary<char, string> Code = new() {
         ['a'] = ".-",
         ['b'] = "-...",
         ['c'] = "-.-.",
@@ -45,7 +45,7 @@ public class Morse
         ['9'] = "----."
     };
 
-    static Dictionary<string, char> Translation = new() {
+   public static Dictionary<string, char> Translation = new() {
         [".-"] = 'a',
         ["-..."] = 'b',
         ["-.-."] = 'c',
@@ -86,7 +86,7 @@ public class Morse
 
 
     //Solutions for the terminal
-    static Dictionary<string, int> Solutions = new()
+   public static Dictionary<string, int> Solutions = new()
     {
         ["--. --."] = 0
     };
@@ -121,6 +121,36 @@ public class Morse
         return translatedText.Trim();
     }
 
+    public void ValidateInput(string currentInput, Terminal terminal = null)
+    {
+
+        Debug.Log(currentInput);
+        string tempInput = currentInput.Replace("?", "").Trim();
+        
+        Debug.Log(tempInput);
+        if (Solutions.TryGetValue(tempInput, out int solution))
+        {
+            Debug.Log("<color=green>" + tempInput + " is valid! Solution: " + solution + "</color>");
+            // print ticket
+            
+            terminal.ticket.CreateTicket(solution);
+
+            if (terminal != null)
+        {
+            terminal.ChangeState(Terminal.TerminalState.CreateTicket);
+        }
+        }
+        else
+        {
+            Debug.Log("<color=red>Input is invalid!</color>");
+            //error sound
+            if (terminal != null)
+        {
+            terminal.ChangeState(Terminal.TerminalState.WaitingForTicket);
+        }
+        }
+    }
+
 }
 
 
@@ -136,11 +166,29 @@ public class Terminal : MonoBehaviour
 
     [SerializeField]
     public GameObject morseInput;
+    public GameObject submitLever;
+    public GameObject printer;
+
+
+    public enum TerminalState
+    {
+        CreateTicket,
+        WaitingForTicket
+    }
+
+    public Ticket ticket = new Ticket();
     public Morse morseRef = new Morse();
 
     public string currentInput = "";
     public string currentTranslation = "";
 
+    public TerminalState state = TerminalState.WaitingForTicket;
+
+    
+    public void ChangeState(TerminalState newState)
+    {
+        state = newState;
+    }
    
 
     
@@ -151,8 +199,11 @@ public class Terminal : MonoBehaviour
 
     public void ClearInput()
     {
+        morseInput.GetComponent<MorseInput>().ClearMorseInput();
         currentInput = "";
         currentTranslation = "";
+        state = TerminalState.WaitingForTicket;
+        
     }
 
 
@@ -170,12 +221,20 @@ public class Terminal : MonoBehaviour
             currentInput = morseInput.GetComponent<MorseInput>().currentMorseInput;
             currentTranslation = morseRef.TranslateMorse(currentInput);
         }
+
+
+        
     }
 
 
     void FixedUpdate()
     {
         UpdateInput();
+        
+        if (state == TerminalState.CreateTicket)
+        {
+            printer.GetComponent<PrinterScript>().printTicket(ticket);
+        }
     }
 
 
@@ -186,4 +245,12 @@ public class Terminal : MonoBehaviour
     }
 
 
+    //Grab the SubmitLver script state and call the ValidateInput method when the lever is pulled
+    public void ValidateInput()
+    {
+        UpdateInput();
+        Debug.Log("CHECKYYYY " + currentInput);
+        string tempInput = currentInput;
+        morseRef.ValidateInput(currentInput, this);
+    }
 }
