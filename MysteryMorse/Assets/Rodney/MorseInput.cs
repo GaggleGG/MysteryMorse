@@ -16,6 +16,9 @@ public class MorseInput : MonoBehaviour, IScrollable
     [SerializeField]
     public AudioSource audioSource;
 
+    [SerializeField]
+    public AudioPlayer audioPlayer;
+
     public enum ScrollDirection
     {
         Up,
@@ -147,7 +150,9 @@ public class MorseInput : MonoBehaviour, IScrollable
             currentMorseInput += ".";
             Debug.Log("<color=yellow>Add Dot to Current Morse Input: " + currentMorseInput + "</color>");
             isScrolling = false;   
-            audioSource.PlayOneShot(dotSound);
+           //audioSource.PlayOneShot(dotSound);
+           audioPlayer.Play("Dot");
+
         }
         else if (frameScrollValue > 0 && timer >= delaySeconds)
         {
@@ -157,7 +162,8 @@ public class MorseInput : MonoBehaviour, IScrollable
             currentMorseInput += "-";
             Debug.Log("<color=red>Add Dash to Current Morse Input: " + currentMorseInput + "</color>");
             isScrolling = false;
-            audioSource.PlayOneShot(dashSound);
+            //audioSource.PlayOneShot(dashSound);
+            audioPlayer.Play("Dash");
         }
     }
 
