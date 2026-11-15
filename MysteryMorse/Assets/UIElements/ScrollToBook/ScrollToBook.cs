@@ -27,7 +27,7 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public List<Image> bookElements;
 
     //List of game objects already unlocked
-    private bool[] unlockedElements = new bool[1];
+    private bool[] unlockedElements = new bool[12];
 
     //Current page index
     private int pageIndex = 0;
@@ -58,6 +58,9 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
         //Using the designated script, listens for the scroll input
         scrollToBookChanged += ScrollBookHovered;
+
+        unlockedElements[0] = true;
+        unlockedElements[1] = true;
     }
 
     //Update is called once per frame
@@ -92,10 +95,10 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             //If the player is not hovering the book icon and has the book open, they can flip pages
             } else if (!useScrollBook && bookOpen == true) {
                 //Flip pages left
-                if (scrollValue.y > 0 && scrollable == true) {
+                if (scrollValue.y > 0) {
                     StartCoroutine(FlipToPage(pageIndex - 1));
                 //Flip pages right
-                } else if (!useScrollBook && bookOpen == true) {
+                } else if (scrollValue.y < 0) {
                     StartCoroutine(FlipToPage(pageIndex + 1));
                 }
             }
@@ -104,9 +107,13 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     //Method that is called by notes to activate corresponding elements in the book
     public void CollectNote(int solutionID) {
+        //Sets the corresponding element active
         setUIActive(bookElements[solutionID]);
+        //Sets the corresponding element to unlocked
         unlockedElements[solutionID] = true;
 
+        //Forces the page index to be 1 and open the book
+        pageIndex = 1;
         if (bookOpen == false) {
             //Starts a coroutine to smoothly move the book up
             StartCoroutine(MoveBook(bookOffScreen, bookCenter, 2));
@@ -175,9 +182,6 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     //Function that flips the book the specific page, revealing its elements and hiding the others
     IEnumerator FlipToPage(int pageNumber) {
-        //Ensures the player cannot rapidly do the action
-        scrollable = false;
-
         //Changes the page index to the page number, but clamped to a range
         pageIndex = Mathf.Clamp(pageNumber, 0, unlockedPages);
 
@@ -188,17 +192,46 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
         //Switch statement that reveals things on the page based on what is on the page and what the player has unlocked
         switch (pageIndex) {
+            //First page
             case 0:
                 if (unlockedElements[0] == true) {
                     setUIActive(bookElements[0]);
                 }
+                if (unlockedElements[1] == true) {
+                    setUIActive(bookElements[1]);
+                }
+                setUIActive(bookElements[8]);
+                setUIActive(bookElements[9]);
+                break;
+            //Second page
+            case 1:
+                if (unlockedElements[2] == true) {
+                    setUIActive(bookElements[0]);
+                }
+                if (unlockedElements[3] == true) {
+                    setUIActive(bookElements[1]);
+                }
+                if (unlockedElements[4] == true) {
+                    setUIActive(bookElements[0]);
+                }
+                if (unlockedElements[5] == true) {
+                    setUIActive(bookElements[1]);
+                }
+                if (unlockedElements[6] == true) {
+                    setUIActive(bookElements[0]);
+                }
+                if (unlockedElements[7] == true) {
+                    setUIActive(bookElements[1]);
+                }
+                setUIActive(bookElements[10]);
+                setUIActive(bookElements[11]);
                 break;
             default:
                 break;
         }
 
         //Delay before setting scrollable back to true so there is still no issue with spamming the action
-        yield return new WaitForSecondsRealtime(0.1f);
-        scrollable = true;
+        //yield return new WaitForSecondsRealtime(0.1f);
+        yield return null;
     }
 }
