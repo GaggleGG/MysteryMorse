@@ -43,6 +43,7 @@ public class EndLock : MonoBehaviour
             Vector3 spawnPosition = transform.position + new Vector3(i * spacing, 0f, 0f);
             GameObject lockInstance = Instantiate(lockPrefab, spawnPosition, Quaternion.identity, transform);
             lockInstance.name = "LockNum_" + (i + 1);
+            Debug.Log($"<color=yellow>Created new {lockInstance} at {spawnPosition}</color>");
             locks.Add(lockInstance);
         }
     }
@@ -68,11 +69,13 @@ public class EndLock : MonoBehaviour
 
         if (isCorrect)
         {
+            Debug.Log($"<color=green>{lockobj} is true!</color>");
             status[index] = true;
             audioSource.PlayOneShot(clickSFX);
         }
         else
         {
+            Debug.Log($"<color=red>{lockobj} is false! {lockobj.GetComponent<LockCombo>().currentNum} does not equal {combos[index]}</color>");
             status[index] = false;
             audioSource.PlayOneShot(clickSFX);
         }
@@ -159,6 +162,7 @@ public class EndLock : MonoBehaviour
         for (int i = 0; i < locks.Count; i++)
         {
             bool correct = CheckLock(locks[i], i);
+            Debug.Log($"<color=orange>{correct}</color>");
             status[i] = correct;
 
             if (!correct)
@@ -169,7 +173,7 @@ public class EndLock : MonoBehaviour
 
         if (allCorrect && locks.Count > 0)
         {
-            Debug.Log("All locks correct");
+            Debug.Log($"<color=purple>{allCorrect} is true!</color>");
             gameWon = true;
         }
     
