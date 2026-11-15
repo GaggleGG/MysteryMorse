@@ -252,12 +252,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfba4ceecd987e04fb765f672dcb25ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Lamp
-  increaseMod: 5
+  increaseMod: 16
   LampLight: {fileID: 2689774644887391705}
   CordTrans: {fileID: 2836779679832280378}
   cordEndPos: {x: 0, y: -0.00443388, z: -0.10916002}
   lightLockThreshhold: 90
-  scrollingFrameWindow: 5
+  scrollingFrameWindow: 20
 --- !u!65 &4575441724975011696
 BoxCollider:
   m_ObjectHideFlags: 0
