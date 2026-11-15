@@ -1544,6 +1544,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 161195016370131359, guid: b461ac48e8db03a4d97cae538a9ee9b4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 374784421057640508, guid: b461ac48e8db03a4d97cae538a9ee9b4, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1624,6 +1628,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 968485632131419675, guid: b461ac48e8db03a4d97cae538a9ee9b4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1185232889106450022, guid: b461ac48e8db03a4d97cae538a9ee9b4, type: 3}
       propertyPath: bookElements.Array.size
       value: 12
@@ -1653,6 +1661,22 @@ PrefabInstance:
       value: LevelCanvas
       objectReference: {fileID: 0}
     - target: {fileID: 5188308750257132494, guid: b461ac48e8db03a4d97cae538a9ee9b4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5596897372917440147, guid: b461ac48e8db03a4d97cae538a9ee9b4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6143904635522865187, guid: b461ac48e8db03a4d97cae538a9ee9b4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545970670795843336, guid: b461ac48e8db03a4d97cae538a9ee9b4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8536137085856029349, guid: b461ac48e8db03a4d97cae538a9ee9b4, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}

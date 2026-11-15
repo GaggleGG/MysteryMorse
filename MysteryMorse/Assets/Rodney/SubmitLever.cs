@@ -9,8 +9,13 @@ public class SubmitLever : MonoBehaviour, IScrollable
     private GameObject LeverBone;
 
     [Header("Terminal Reference")]
-    [SerializeField]
+    
     private Terminal terminalRef;
+
+    [SerializeField]
+    private GameObject terminal;
+
+
 
     [Header("Sound Effects")]
     [SerializeField] public AudioClip ClickSound;
@@ -60,6 +65,8 @@ public class SubmitLever : MonoBehaviour, IScrollable
 
     void Start()
     {
+        terminalRef = terminal.GetComponent<Terminal>();
+
         //store base rot to restrict rot
         Transform targetTransform = LeverBone != null ? LeverBone.transform : transform;
         Vector3 initialEuler = targetTransform.localEulerAngles;
@@ -168,7 +175,7 @@ public class SubmitLever : MonoBehaviour, IScrollable
             //terminalRef.UpdateInput();
             //terminalRef.DisplayTranslation();
             // yield return new WaitForSecondsRealtime(0.1f);
-            // terminalRef.ClearInput();
+            terminalRef.ClearInput();
         }
         else
         {

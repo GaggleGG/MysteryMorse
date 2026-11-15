@@ -1,9 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using TMPro;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -59,14 +55,13 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         //Using the designated script, listens for the scroll input
         scrollToBookChanged += ScrollBookHovered;
 
+        //Sets the alphabet and tutorial to active at the start
         unlockedElements[0] = true;
         unlockedElements[1] = true;
     }
 
     //Update is called once per frame
     void Update() {
-        Debug.Log(pageIndex);
-
         //Reads the current mouse and scroll wheel valuesS
         mousePosition = Mouse.current.position.ReadValue();
         Vector2 scrollValue = Scroll.ReadValue<Vector2>();
@@ -107,17 +102,21 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     //Method that is called by notes to activate corresponding elements in the book
     public void CollectNote(int solutionID) {
+        //Sets the book UI to active
+        setUIActive(book);
         //Sets the corresponding element active
         setUIActive(bookElements[solutionID]);
         //Sets the corresponding element to unlocked
         unlockedElements[solutionID] = true;
 
         //Forces the page index to be 1 and open the book
-        pageIndex = 1;
-        if (bookOpen == false) {
-            //Starts a coroutine to smoothly move the book up
-            StartCoroutine(MoveBook(bookOffScreen, bookCenter, 2));
-        }
+        StartCoroutine(FlipToPage(1));
+
+        //Starts a coroutine to smoothly move the book up
+        StartCoroutine(MoveBook(bookOffScreen, bookCenter, 2));
+
+        //Sets book open to true
+        bookOpen = true;
     }
 
     //Sets the using book variable to true when the player scrolls over the specific UI element
@@ -194,35 +193,41 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         switch (pageIndex) {
             //First page
             case 0:
+                //Alphabet/Tutorial
                 if (unlockedElements[0] == true) {
                     setUIActive(bookElements[0]);
                 }
                 if (unlockedElements[1] == true) {
                     setUIActive(bookElements[1]);
                 }
+
+                //Page numbers
                 setUIActive(bookElements[8]);
                 setUIActive(bookElements[9]);
                 break;
             //Second page
             case 1:
+                //Tickets
                 if (unlockedElements[2] == true) {
-                    setUIActive(bookElements[0]);
+                    setUIActive(bookElements[2]);
                 }
                 if (unlockedElements[3] == true) {
-                    setUIActive(bookElements[1]);
+                    setUIActive(bookElements[3]);
                 }
                 if (unlockedElements[4] == true) {
-                    setUIActive(bookElements[0]);
+                    setUIActive(bookElements[4]);
                 }
                 if (unlockedElements[5] == true) {
-                    setUIActive(bookElements[1]);
+                    setUIActive(bookElements[5]);
                 }
                 if (unlockedElements[6] == true) {
-                    setUIActive(bookElements[0]);
+                    setUIActive(bookElements[6]);
                 }
                 if (unlockedElements[7] == true) {
-                    setUIActive(bookElements[1]);
+                    setUIActive(bookElements[7]);
                 }
+
+                //Page numbersS
                 setUIActive(bookElements[10]);
                 setUIActive(bookElements[11]);
                 break;
@@ -230,8 +235,6 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
                 break;
         }
 
-        //Delay before setting scrollable back to true so there is still no issue with spamming the action
-        //yield return new WaitForSecondsRealtime(0.1f);
         yield return null;
     }
 }
