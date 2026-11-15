@@ -1,0 +1,98 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &7445962311206426618
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 09508654fd163ec4f9e642c4e548662f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 25.753998
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 09508654fd163ec4f9e642c4e548662f, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 25.753998
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 09508654fd163ec4f9e642c4e548662f, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 25.753998
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 09508654fd163ec4f9e642c4e548662f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.65
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 09508654fd163ec4f9e642c4e548662f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.76
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 09508654fd163ec4f9e642c4e548662f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3.57
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 09508654fd163ec4f9e642c4e548662f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.28532344
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 09508654fd163ec4f9e642c4e548662f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.2853235
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 09508654fd163ec4f9e642c4e548662f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.64698577
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 09508654fd163ec4f9e642c4e548662f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.6469857
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 09508654fd163ec4f9e642c4e548662f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 09508654fd163ec4f9e642c4e548662f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 09508654fd163ec4f9e642c4e548662f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -132.405
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 09508654fd163ec4f9e642c4e548662f, type: 3}
+      propertyPath: m_Name
+      value: terminal
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 09508654fd163ec4f9e642c4e548662f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8963647198840734220}
+  m_SourcePrefab: {fileID: 100100000, guid: 09508654fd163ec4f9e642c4e548662f, type: 3}
+--- !u!1 &7751880869747026603 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 09508654fd163ec4f9e642c4e548662f, type: 3}
+  m_PrefabInstance: {fileID: 7445962311206426618}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8963647198840734220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7751880869747026603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb6fd9e55c707554fa0fd08aa5103483, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Terminal
+  morseInput: {fileID: 0}
+  submitLever: {fileID: 0}
+  printer: {fileID: 0}
+  notePrefab: {fileID: 5460903835795454326, guid: 748eb95f413a34833bbaa968f470bd90, type: 3}
+  currentInput: 
+  currentTranslation: 
+  state: 1
