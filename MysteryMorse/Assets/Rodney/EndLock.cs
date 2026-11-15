@@ -9,7 +9,7 @@ public class EndLock : MonoBehaviour
     
     //gameobject array
     public GameObject lockPrefab;
-    public float spacing = 2.0f;
+    public float spacing = .0010f;
     //combinations
 
 
@@ -32,18 +32,54 @@ public class EndLock : MonoBehaviour
     void Start()
     {
         status = new bool[numInput];
+        if (combos.Count==0)
+        {
+            combos = new List<int>();
+
+            for (int i = 0; i < numInput; i++)
+            {
+                combos.Add(5); // placeholder values
+            }
+        }
         InstantiatePrefabs();
     }
 
 
     public void InstantiatePrefabs()
     {
+        if (lockPrefab == null)
+        return;
+
+        Renderer parentRenderer = GetComponent<Renderer>();
+        Renderer prefabRenderer = lockPrefab.GetComponent<Renderer>();
+
+        float parentWidth = parentRenderer != null ? parentRenderer.bounds.size.x : 0f;
+        float prefabWidth = prefabRenderer != null ? prefabRenderer.bounds.size.x : 1f;
+
+        float totalRequiredWidth = (prefabWidth * numInput) + (spacing * (numInput - 1));
+        float startX = 0f;
+
+        if (parentWidth > 0f)
+        {
+            startX = -((totalRequiredWidth - prefabWidth) / 2f);
+        }
+
+        
+
         for (int i = 0; i < numInput; i++)
         {
-            Vector3 spawnPosition = transform.position + new Vector3(i * spacing, 0f, 0f);
-            GameObject lockInstance = Instantiate(lockPrefab, spawnPosition, Quaternion.identity, transform);
+            // Vector3 spawnPosition = transform.position + new Vector3(i * spacing, 0f, 0f);
+            GameObject lockInstance = Instantiate(lockPrefab, transform);
             lockInstance.name = "LockNum_" + (i + 1);
-            Debug.Log($"<color=yellow>Created new {lockInstance} at {spawnPosition}</color>");
+            float xPos = startX + (i * (prefabWidth + spacing));
+            lockInstance.transform.localPosition = new Vector3(xPos, 0f, .05f);
+
+            LockCombo combo = lockInstance.GetComponent<LockCombo>();
+            if (combo != null)
+            {
+                combo.lockItem = this;
+            }
+            Debug.Log($"<color=yellow>Created new {lockInstance} at {xPos}</color>");
             locks.Add(lockInstance);
         }
     }
@@ -65,6 +101,13 @@ public class EndLock : MonoBehaviour
         // {
         //     return false;  
         // }
+        
+        if (index < 0 || index >= combos.Count || index >= locks.Count)
+        {
+            Debug.LogWarning("Invalid index: " + index);
+            return false;
+        }
+
         bool isCorrect = lockobj.GetComponent<LockCombo>().currentNum == combos[index];
 
         if (isCorrect)
@@ -84,7 +127,28 @@ public class EndLock : MonoBehaviour
     }
 
 
-    
+    public void checkStatus()
+    {
+        bool allCorrect = true;
+
+        for (int i = 0; i < locks.Count; i++)
+        {
+            bool correct = CheckLock(locks[i], i);
+            Debug.Log($"<color=orange>{correct}</color>");
+            status[i] = correct;
+
+            if (!correct)
+            {
+                allCorrect = false;
+            }
+        }
+
+        if (allCorrect && locks.Count > 0)
+        {
+            Debug.Log($"<color=purple>{allCorrect} is true!</color>");
+            gameWon = true;
+        }
+    }
 
 
     // Update is called once per frame
@@ -157,25 +221,7 @@ public class EndLock : MonoBehaviour
         //     Debug.Log("all locks correct");
         // }
     
-        bool allCorrect = true;
-
-        for (int i = 0; i < locks.Count; i++)
-        {
-            bool correct = CheckLock(locks[i], i);
-            Debug.Log($"<color=orange>{correct}</color>");
-            status[i] = correct;
-
-            if (!correct)
-            {
-                allCorrect = false;
-            }
-        }
-
-        if (allCorrect && locks.Count > 0)
-        {
-            Debug.Log($"<color=purple>{allCorrect} is true!</color>");
-            gameWon = true;
-        }
+        
     
     }
 

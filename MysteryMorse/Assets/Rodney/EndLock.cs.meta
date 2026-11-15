@@ -1,2 +1,14 @@
 fileFormatVersion: 2
 guid: 60c61e4e32514bd4a96d85b52a00c877
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - lockPrefab: {fileID: 5884057914665378602, guid: 4d4d55b4e7ed1b943a25f554a58ef713, type: 3}
+  - audioSource: {instanceID: 0}
+  - clickSFX: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
