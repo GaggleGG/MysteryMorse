@@ -8,28 +8,50 @@ public class Zipper : ScrollToPoint
     Vector3 zipEndLocation;
 
     public GameObject zipperSlide;
-    public GameObject note;
-    private bool noteSpawned = false;
+    public GameObject Tag;
+    private bool unZipped = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        Tag.SetActive(false);
+
         zipperSlide.transform.localPosition = zipStartLocation;
-        slideValue = 100;
+        slideValue = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (slideValue <= 0 && !noteSpawned)
+        //Debug.Log("slideValue: " + slideValue);
+
+        if (slideValue >= 100 && !unZipped)
         {
-            Instantiate(note, transform.position, Quaternion.identity);
-            noteSpawned = true;
+            UnZip();
+            
+        }
+    }
+    public override void WasScrolled(float frameScrollValue)
+    {
+        if(!unZipped)
+        {
+            base.WasScrolled(frameScrollValue);
         }
     }
 
     public override void UpdateVisuals()
     {
-        Vector3 position = Vector3.Lerp(zipStartLocation, zipEndLocation, slideValue/targetValue);
-        zipperSlide.transform.localPosition = position;
+        zipperSlide.transform.localPosition = Vector3.Lerp(zipStartLocation, zipEndLocation, slideValue/targetValue);
     }
+
+    void UnZip()
+    {
+        unZipped = true;
+
+        //set jacket model to unzipped
+
+        //reveal tag
+        Tag.SetActive(true);
+
+    }
+
 }
