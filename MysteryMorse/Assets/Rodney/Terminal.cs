@@ -129,6 +129,7 @@ public class Morse
         {
             Debug.Log("<color=green>" + tempInput + " is valid! Solution: " + solution + "</color>");
             // print ticket
+             
 
         }
         else
