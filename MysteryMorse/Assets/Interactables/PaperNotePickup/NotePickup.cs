@@ -16,6 +16,11 @@ public class NotePickup : ScrollToPoint
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        if(bookIcon == null)
+        {
+            bookIcon = GameObject.Find("BookIcon").GetComponent<Image>();
+        }
+
         NoteModel = transform.GetChild(0);
         if(startPos == null)
         {

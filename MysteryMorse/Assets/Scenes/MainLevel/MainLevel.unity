@@ -737,6 +737,17 @@ Transform:
   - {fileID: 1729118724}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &430082279 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6960472376699991440, guid: b461ac48e8db03a4d97cae538a9ee9b4, type: 3}
+  m_PrefabInstance: {fileID: 92488895}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!1 &444062491
 GameObject:
   m_ObjectHideFlags: 0
@@ -5011,6 +5022,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 458094212010598326, guid: 748eb95f413a34833bbaa968f470bd90, type: 3}
+      propertyPath: bookIcon
+      value: 
+      objectReference: {fileID: 430082279}
     - target: {fileID: 458094212010598326, guid: 748eb95f413a34833bbaa968f470bd90, type: 3}
       propertyPath: increaseMod
       value: 5
