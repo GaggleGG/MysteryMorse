@@ -29,6 +29,7 @@ public class SubmitLever : MonoBehaviour, IScrollable
     [SerializeField] private float scrollSensitivity = 5f; // How far each scroll step moves the lever
     [SerializeField] private float rotationSpeed = 15f;    // Smoothing speed toward target Z angle
     [SerializeField] private float returnSpeed = 10f;      // Speed for snapping back when idle
+    private Quaternion initialLocalRotation;
 
     [Header("Scroll & Cooldown Timers")]
     [SerializeField] public float delayForSpace = 3f;
@@ -60,9 +61,11 @@ public class SubmitLever : MonoBehaviour, IScrollable
     void Start()
     {
         //store base rot to restrict rot
-        Vector3 initialEuler = transform.localEulerAngles;
+        Transform targetTransform = LeverBone != null ? LeverBone.transform : transform;
+        Vector3 initialEuler = targetTransform.localEulerAngles;
         initialYAngle = initialEuler.y;
         initialXAngle = initialEuler.x;
+        initialLocalRotation = targetTransform.localRotation;
         
         currentZAngle = minZRotation;
         targetZAngle = minZRotation;
@@ -176,6 +179,7 @@ public class SubmitLever : MonoBehaviour, IScrollable
     private void ApplyZRotation(float zAngle)
     {
         Transform targetTransform = LeverBone != null ? LeverBone.transform : transform;
-        targetTransform.localRotation = Quaternion.Euler(initialXAngle, initialYAngle, zAngle);
+        // Rotates cleanly around the bone's own local Z-axis relative to its starting pose
+        targetTransform.localRotation = initialLocalRotation * Quaternion.Euler(0f, 0f, zAngle);
     }
 }
