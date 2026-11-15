@@ -8,7 +8,7 @@ public class CircularScroll : MonoBehaviour, IScrollable
 
     public float increaseMod = 5;
     public float startAngle;
-    Vector3 rotationAxis;
+    public Vector3 rotationAxis;
 
     /*
     Vector3 startRotation;

@@ -1,10 +1,15 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class TuneScroll : CircularScroll
 {
-    float minStation = 55.1f;
-    float maxStation = 155.1f;
+    float minStation = 55.4f;
+    float maxStation = 155.4f;
+    float station = 55.4f;
+    public GameObject displayObj;
+    public float secretStation;
 
     [SerializeField] AudioPlayer radioAudio;
 
@@ -17,18 +22,31 @@ public class TuneScroll : CircularScroll
     // Update is called once per frame
     void Update()
     {
-        
+       
     }
 
     public override void WasScrolled(float frameScrollValue)
     {
         base.WasScrolled(frameScrollValue);
+        station = slideValue + 55.4f;
+        displayObj.GetComponent<TextMeshPro>().text = station.ToString();
+        SetStation();
+
     }
 
     
     void SetStation()
     {
-        
+        if (station == secretStation)
+        {
+            radioAudio.Play("Code");
+            radioAudio.Stop("Static");
+        }
+        else
+        {
+            radioAudio.Play("Static");
+            radioAudio.Stop("Code");
+        }
     }
 
 
