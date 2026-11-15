@@ -1,4 +1,5 @@
 using Unity.VisualScripting;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
  
 public class Lamp : ScrollToPoint
@@ -8,6 +9,9 @@ public class Lamp : ScrollToPoint
     Vector3 cordStartPos;
     [SerializeField] Vector3 cordEndPos;
 
+
+    public delegate void LampToggled(bool lampOn);
+    public static event LampToggled lampToggled;
     float prevSlideVal;
 
     public enum GameState
@@ -19,6 +23,7 @@ public class Lamp : ScrollToPoint
 
     //Amount pulled to flip lamp
     public float lightLockThreshhold = 90;
+
     bool locked = false;
 
 
@@ -36,7 +41,7 @@ public class Lamp : ScrollToPoint
 
 
 
-    [SerializeField] int scrollingFrameWindow = 4;
+    [SerializeField] int scrollingFrameWindow = 6;
     int scrollFrameTimer = 0;
 
 
@@ -44,6 +49,7 @@ public class Lamp : ScrollToPoint
     void Start()
     {
         cordStartPos = CordTrans.localPosition;
+        increaseMod = 12;
     }
    
 
@@ -53,7 +59,7 @@ public class Lamp : ScrollToPoint
         //only scroll one direction (pulling cord down)
         if(frameScrollValue > 0)
         {
-            Debug.Log("frame scroll val: " + frameScrollValue);
+            //Debug.Log("frame scroll val: " + frameScrollValue);
             base.WasScrolled(frameScrollValue);
             scrollFrameTimer = 0;
 
@@ -72,47 +78,6 @@ public class Lamp : ScrollToPoint
         }
 
 
-
-        /*
-        //Adds the scrolling value to the cordPosition to create a value.
-        cordPosition += frameScrollValue;
-        cordPosition = Mathf.Clamp(cordPosition, minCord, maxCord);
-        if (frameScrollValue == 0)
-        {
-            isScrolling = false;
-            flippable = true;
-        }
-        else
-        {
-            isScrolling = true;
-        }
-            Debug.Log(cordPosition);
-        if (flippable == true)
-        {
-         if ((cordPosition == maxCord) && (onState == false))
-                {
-                     onState = true;
-                    cordPosition = 0;
-                    LampState = GameState.On;
-                    flippable = false;
-                }
-         else if((cordPosition == maxCord) && (onState == true))
-         {
-                    onState = false;
-                    cordPosition = 0;
-                    LampState = GameState.Off;
-                    flippable = false;
-
-         }
-        }
-        Debug.Log($"Frame Scroll value: {frameScrollValue}");
-       
-
-       
-        
-        LightCheck();
-
-        */
     }
 
 
@@ -126,6 +91,7 @@ public class Lamp : ScrollToPoint
     //sets to specific light on state (true = on, false = off)
     public void SetLight(bool isOn)
     {
+        lampToggled?.Invoke(isOn);
         onState = isOn;
         LampLight.gameObject.SetActive(onState);
     }
@@ -142,15 +108,17 @@ public class Lamp : ScrollToPoint
             //Debug.Log("Scrolling!");
             isScrolling = true;
             scrollFrameTimer++;
-        } else
+        }
+        else
         {
+            
             //Debug.Log("NOT SCROLLING!!");
             isScrolling = false;
         }
 
         if(!isScrolling)
         {
-            slideValue = Mathf.MoveTowards(slideValue, 0, 1000 * Time.deltaTime);
+            slideValue = Mathf.MoveTowards(slideValue, 0, 500 * Time.deltaTime);
             //Debug.Log("slideval: " + slideValue);
         }
 

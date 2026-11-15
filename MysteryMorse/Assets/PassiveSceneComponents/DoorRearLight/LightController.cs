@@ -10,6 +10,9 @@ public class LightController : MonoBehaviour
     [SerializeField]
     private string message = "waddup";
 
+    [SerializeField]
+    bool usingRawMessage = false;
+
 
     [SerializeField]
     //turn this up if you want the pattern to take a bit longer
@@ -21,7 +24,7 @@ public class LightController : MonoBehaviour
     [SerializeField]
     float dashDuration = 0.4f;
     [SerializeField]
-    float letterSpaceDuration = 0.4f;
+    float letterSpaceDuration = 0.2f;
     [SerializeField]
     float wordSpaceDuration = 0.6f;
 
@@ -30,17 +33,29 @@ public class LightController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        //lightIsFlashing = false;
-        //flashLight.enabled = false;
-
-        lightIsFlashing = true;
-        StartPlayingMessage();
+        lightIsFlashing = false;
+        flashLight.enabled = false;
+        Lamp.lampToggled += SceneLightToggled;
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void SceneLightToggled(bool sceneLightOn)
+    {
+        if(!sceneLightOn)
+        {
+            StartPlayingMessage();
+        }
+        else
+        {
+            flashLight.enabled = false;
+            StopPlayingMessage();
+        }
+        lightIsFlashing = !sceneLightOn;
     }
 
     public void StartPlayingMessage()
@@ -88,7 +103,7 @@ public class LightController : MonoBehaviour
 
                         if (s < code.Length - 1)
                         {
-                            yield return new WaitForSeconds(dotDuration);
+                            yield return new WaitForSeconds(letterSpaceDuration);
                         }
                     }
 

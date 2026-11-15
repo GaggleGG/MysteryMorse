@@ -1279,6 +1279,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 671356329}
     - target: {fileID: 8501574487950338779, guid: 763d4f6d4b7041c40bebd82326f38db7, type: 3}
+      propertyPath: increaseMod
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8501574487950338779, guid: 763d4f6d4b7041c40bebd82326f38db7, type: 3}
       propertyPath: cordEndPos.x
       value: -0.19
       objectReference: {fileID: 0}
