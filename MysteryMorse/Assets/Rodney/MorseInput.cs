@@ -147,6 +147,7 @@ public class MorseInput : MonoBehaviour, IScrollable
             currentMorseInput += ".";
             Debug.Log("<color=yellow>Add Dot to Current Morse Input: " + currentMorseInput + "</color>");
             isScrolling = false;   
+            audioSource.PlayOneShot(dotSound);
         }
         else if (frameScrollValue > 0 && timer >= delaySeconds)
         {
@@ -156,6 +157,7 @@ public class MorseInput : MonoBehaviour, IScrollable
             currentMorseInput += "-";
             Debug.Log("<color=red>Add Dash to Current Morse Input: " + currentMorseInput + "</color>");
             isScrolling = false;
+            audioSource.PlayOneShot(dashSound);
         }
     }
 
