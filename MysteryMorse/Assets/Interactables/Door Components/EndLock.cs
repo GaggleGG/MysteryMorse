@@ -10,7 +10,7 @@ public class EndLock : MonoBehaviour
     //gameobject array
     public GameObject lockPrefab;
     public float spacing = .0010f;
-    float minY = -0.05f;
+    float minY = -0.04f;
     float maxY = 0.05f;
 
 
@@ -66,7 +66,7 @@ public class EndLock : MonoBehaviour
         for (int i = 0; i < numInput; i++)
         {
            float yPos = startY + (i * spacing);
-            Vector3 spawnPos = transform.position + new Vector3(.01f, yPos, 0f);
+            Vector3 spawnPos = transform.position + new Vector3(-.006f, yPos, 0f);
 
             // Vector3 spawnPosition = transform.position + new Vector3(i * spacing, 0f, 0f);
             // GameObject lockInstance = Instantiate(lockPrefab, spawnPos, Quaternion.Euler(90f, -90f, -90f), transform);
@@ -74,8 +74,8 @@ public class EndLock : MonoBehaviour
             // lockInstance.transform.localRotation = Quaternion.Euler(0f, -90f, -90f);
 
             GameObject lockInstance = Instantiate(lockPrefab, transform);
-            lockInstance.transform.localPosition = new Vector3(0f, yPos, 0f);
-            lockInstance.transform.localRotation = Quaternion.Euler(0f, -90f, 0f);
+            lockInstance.transform.localPosition = new Vector3(-.006f, yPos, 0f);
+            lockInstance.transform.localRotation = Quaternion.Euler(0f, -90f, -90f);
             lockInstance.transform.localScale = Vector3.one * 0.01f;
 
             
