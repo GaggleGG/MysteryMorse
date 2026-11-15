@@ -18,6 +18,8 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     //Actual book UI element
     [SerializeField] private Image book;
+    [SerializeField] private Image wheel;
+    private Image bookIcon;
 
     //List of book elements to collect
     public List<Image> bookElements;
@@ -44,6 +46,12 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     private Vector2 bookCenter = new Vector2(0, 0);
     private Vector2 bookOffScreen = new Vector2(0, -1100);
 
+    //Other positions
+    private Vector2 bookIconPosition = new Vector2(-102.3f, 102);
+    private Vector2 wheelPosition = new Vector2(0, -189);
+    private Vector2 bookIconOriginal;
+    private Vector2 wheelOriginal;
+
     //Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start() {
         //Scroll input action
@@ -59,6 +67,10 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         unlockedElements[0] = true;
         unlockedElements[1] = true;
         unlockedElements[12] = true;
+    }
+
+    private void Awake() {
+         bookIcon = this.GetComponent<Image>();
     }
 
     //Update is called once per frame
@@ -104,9 +116,15 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         //Sets the corresponding element to unlocked
         unlockedElements[solutionID] = true;
 
-        //Sets the page index to 1 (where the tickets are), and starts a coroutine to smoothly move the book up
-        pageIndex = 1;
-        StartCoroutine(MoveBook(bookOffScreen, bookCenter, 2));
+        //If the player gets the specifc note, runs the UI unlock instead
+        if (solutionID == 6) {
+            pageIndex = 1;
+            StartCoroutine(UnlockUI());
+        } else {
+            //Sets the page index to 1 (where the tickets are), and starts a coroutine to smoothly move the book up
+            pageIndex = 1;
+            StartCoroutine(MoveBook(bookOffScreen, bookCenter, 2));
+        }
     }
 
     //Sets the using book variable to true when the player scrolls over the specific UI element
@@ -238,5 +256,27 @@ public class ScrollToBook : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         }
 
         yield return null;
+    }
+
+    //Unlocks the UI when the player gets their first note
+    IEnumerator UnlockUI() {
+        //Intervals
+        var t = 0f;
+
+        //Original positions based on the positions in the UI
+        bookIconOriginal = bookIcon.rectTransform.anchoredPosition;
+        wheelOriginal = wheel.rectTransform.anchoredPosition;
+
+        //While it has not reached the interval, lerps the book
+        while (t <= 1f) {
+            t += 2 * Time.deltaTime;
+            bookIcon.rectTransform.anchoredPosition = Vector2.Lerp(bookIconOriginal, bookIconPosition, t);
+            wheel.rectTransform.anchoredPosition = Vector2.Lerp(wheelOriginal, wheelPosition, t);
+            yield return null;
+        }
+
+        //Sets true positions
+        bookIcon.rectTransform.anchoredPosition = bookIconPosition;
+        wheel.rectTransform.anchoredPosition = wheelPosition;
     }
 }
