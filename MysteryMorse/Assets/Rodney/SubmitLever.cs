@@ -167,7 +167,8 @@ public class SubmitLever : MonoBehaviour, IScrollable
             terminalRef.ValidateInput();
             terminalRef.UpdateInput();
             terminalRef.DisplayTranslation();
-            terminalRef.ClearInput();
+            // yield return new WaitForSecondsRealtime(0.1f);
+            // terminalRef.ClearInput();
         }
         else
         {

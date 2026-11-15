@@ -121,7 +121,7 @@ public class Morse
         return translatedText.Trim();
     }
 
-    public void ValidateInput(string currentInput)
+    public void ValidateInput(string currentInput, Terminal terminal = null)
     {
 
         string tempInput = currentInput.Replace("?", ""); // Remove invalids from the input for validation
@@ -129,13 +129,22 @@ public class Morse
         {
             Debug.Log("<color=green>" + tempInput + " is valid! Solution: " + solution + "</color>");
             // print ticket
-             
+            
+            terminal.ticket.CreateTicket(solution);
 
+            if (terminal != null)
+        {
+            terminal.ChangeState(Terminal.TerminalState.CreateTicket);
+        }
         }
         else
         {
             Debug.Log("<color=red>Input is invalid!</color>");
             //error sound
+            if (terminal != null)
+        {
+            terminal.ChangeState(Terminal.TerminalState.WaitingForTicket);
+        }
         }
     }
 
@@ -156,13 +165,25 @@ public class Terminal : MonoBehaviour
     public GameObject morseInput;
     public GameObject submitLever;
 
+    public enum TerminalState
+    {
+        CreateTicket,
+        WaitingForTicket
+    }
+
+    public Ticket ticket = new Ticket();
     public Morse morseRef = new Morse();
 
     public string currentInput = "";
     public string currentTranslation = "";
 
-    
+    public TerminalState state = TerminalState.WaitingForTicket;
 
+    
+    public void ChangeState(TerminalState newState)
+    {
+        state = newState;
+    }
    
 
     
@@ -176,6 +197,8 @@ public class Terminal : MonoBehaviour
         morseInput.GetComponent<MorseInput>().ClearMorseInput();
         currentInput = "";
         currentTranslation = "";
+        state = TerminalState.WaitingForTicket;
+        
     }
 
 
@@ -212,7 +235,8 @@ public class Terminal : MonoBehaviour
     //Grab the SubmitLver script state and call the ValidateInput method when the lever is pulled
     public void ValidateInput()
     {
+        Debug.Log("CHECKYYYY " + currentInput);
         string tempInput = currentInput;
-        morseRef.ValidateInput(tempInput);
+        morseRef.ValidateInput(currentInput, this);
     }
 }
