@@ -75,7 +75,7 @@ public class EndLock : MonoBehaviour
 
             GameObject lockInstance = Instantiate(lockPrefab, transform);
             lockInstance.transform.localPosition = new Vector3(-.006f, yPos, 0f);
-            lockInstance.transform.localRotation = Quaternion.Euler(0f, -90f, -90f);
+            lockInstance.transform.localRotation = Quaternion.Euler(180f, -90f, -90f);
             lockInstance.transform.localScale = Vector3.one * 0.01f;
 
             
